@@ -12,29 +12,44 @@ lịch sử. Thuyết minh từng bài trong `docs/`.
   D800–D1000, trường `drawing_version` từng mã) trong `data_in/pile_specs.json`,
   hàm `section(x)` trong `src/modules/xep-coc/pile_specs.js`, test
   `node --test tests/bt00.test.mjs` — 8/8 pass.
+- **BT01 — xong, đã kiểm chứng:** một cọc, hai gối, tự trọng. Lõi giải dầm
+  Euler-Bernoulli chuẩn SI (`src/core/fem_solver.js`, `src/core/math_matrix.js`),
+  module `src/modules/xep-coc/bt01.js`. Mốc PHC-B500 L = 12 m, gối cách đầu
+  2,4 m: R = 17,389 kN, M gối −8,347 kN·m, M giữa nhịp 10,433 kN·m, võng giữa
+  nhịp 0,441 mm — khớp giải tích và công ảo. Xem `docs/BT01_thuyet-minh.md`,
+  test 7/7.
+- **BT02 — xong, đã kiểm chứng:** thêm tải tập trung/vệt từ tầng trên
+  (`src/modules/xep-coc/bt02.js`). Tải đúng gối chỉ tăng phản lực, M(x) không
+  đổi; tải lệch khớp tĩnh học; chồng chất tuyến tính hai tuyến kê. Xem
+  `docs/BT02_thuyet-minh.md`, test 6/6.
+- Tổng test 30/30 pass (`node --test tests/*.test.mjs`). **Mốc M1 hoàn thành.**
 - **BT03 (phần 1) — chỉ còn là đối chiếu chẩn đoán:** σ_pc tính ngược theo
-  TCVN 7888 §6.5/§6.6 (A 4, AB 6, B 8, C 10 MPa), σ_pe 678–878 MPa, E_b 42.000 MPa,
-  E_p 200.000 MPa, γ_c 25 kN/m³, L là thông số tính toán. Xem
+  TCVN 7888 §6.5/§6.6 (A 4, AB 6, B 8, C 10 MPa), σ_pe 678–878 MPa. Xem
   `docs/BT03_backcheck_sigma_pc.md`, `src/modules/xep-coc/prestress.js`, test
-  `tests/bt03_backcheck.test.mjs` — 5/5 pass. Tổng 13/13 test pass.
-  Theo Plan v0.5.0, **không dùng** các giá trị suy từ `M_cr/M_u` hay cấp tải làm
-  đầu vào/ngưỡng tính; BT03 đầy đủ phải tự tính tổn hao theo TCVN 5574:2018 §9.1.
-- BT01–BT14: chưa làm. Bước tiếp theo theo Plan §11.2: **BT01** (một cọc, hai gối,
-  tự trọng). Thứ tự: BT01–BT02 → BT03–BT08 → S2 → S1/S3 → BT13–BT14.
+  5/5 pass. Theo Plan v0.5.0, **không dùng** các giá trị suy từ `M_cr/M_u` hay
+  cấp tải làm đầu vào/ngưỡng tính; BT03 đầy đủ phải tự tính tổn hao theo
+  TCVN 5574:2018 §9.1.
+- BT03–BT14: chưa làm (BT03 đầy đủ thuộc mốc M2). Thứ tự theo Plan §11.2:
+  BT03–BT08 → S2 → S1/S3 → BT13–BT14.
 
 ## Cấu trúc
 
 ```text
 src/
-  ui/            # giao diện từng module
-  core/          # fem_solver.js, math_matrix.js (chua co)
+  ui/            # giao diện từng module (chua co, moc M6)
+  core/
+    fem_solver.js    # BT01/BT02: dam Euler-Bernoulli, don vi SI
+    math_matrix.js   # giai he tuyen tinh (khu Gauss, chon tru chinh)
   modules/xep-coc/
     pile_specs.js   # BT00: du lieu coc, section(x)
+    prestress.js    # BT03 phan 1: doi chieu chan doan sigma_pc
+    bt01.js         # BT01: mot coc, hai goi, tu trong
+    bt02.js         # BT02: them tai tap trung/vet tu tang tren
   workers/       # Web Worker (chua co)
-data_in/         # pile_specs.json, support_ground_specs.json (chua co)
+data_in/         # pile_specs.json (BT00-3), support_ground_specs.json (chua co)
 data_out/        # mau xuat bao cao
-docs/            # BT00_thuyet-minh.md, HDSD (chua co)
-tests/           # bt00.test.mjs
+docs/            # BT00/BT01/BT02/BT03_thuyet-minh.md, Plan v0.5.0, Skill
+tests/           # bt00, bt01, bt02, bt03_backcheck, math_matrix — 30 test
 Ref/             # ban ve goc Phan Vu (PDF) + ban text trich xuat Ref/txt/
 tools/           # extract_pile_specs.py — trich xuat PDF -> pile_specs.json
 ```
@@ -42,14 +57,14 @@ tools/           # extract_pile_specs.py — trich xuat PDF -> pile_specs.json
 ## Chạy test
 
 ```bash
-node --test tests/bt00.test.mjs
+node --test tests/*.test.mjs
 ```
 
 ## Đơn vị nội bộ
 
-BT00 dùng mm, N, MPa (= N/mm²); mômen công bố trên bản vẽ giữ kN·m; các hàm
-đã trả kèm tương đương SI (m², m⁴, m³). Plan v0.5.0 §6.4 yêu cầu lõi tính chuẩn
-SI m–N–Pa — việc chuyển lõi sang SI sẽ chốt ở bước BT01, không đổi ngầm ở đây.
+Lõi tính BT01/BT02 chuẩn SI: m, N, Pa, N·m; hiển thị đổi sang kN, kN·m, mm
+tại biên. BT00 vẫn lưu mm/N/MPa trong `pile_specs.json` nhưng các hàm đã trả
+kèm tương đương SI (A_m2, I_m4, W_m3) để BT01 dùng trực tiếp.
 Tự trọng cần `gamma_c` có nguồn — BT00 không tự điền.
 
 ## Ghi chú quan trọng (BT00)

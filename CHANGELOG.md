@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## 0.3.0 — 16/11/2026 — Mốc M1: BT01 + BT02 (bài dầm cơ bản)
+
+- Lõi tính chuẩn SI (m, N, Pa) chốt từ BT01: `src/core/fem_solver.js`
+  (dầm Euler-Bernoulli 2 nút, M/Q bằng cân bằng đoạn trái, v(x) Hermite +
+  số hạng tải đều) và `src/core/math_matrix.js` (khử Gauss, chọn trụ chính).
+- BT01 (`src/modules/xep-coc/bt01.js`, `docs/BT01_thuyet-minh.md`): một cọc,
+  hai gối, tự trọng; mốc PHC-B500 L = 12 m, gối cách đầu 2,4 m — R 17,389 kN,
+  M gối −8,347 kN·m, M giữa nhịp 10,433 kN·m, võng giữa nhịp 0,441 mm, khớp
+  giải tích và công ảo (7 test).
+- **Hiệu chính mốc chuẩn cũ:** đầu hẫng võng LÊN 0,224 mm, không phải xuống
+  0,45 mm như mốc chuẩn bị trước đây (đã kiểm chứng bằng FEM, công ảo và
+  tính tay chồng chất; xem thuyết minh BT01 §6).
+- BT02 (`src/modules/xep-coc/bt02.js`, `docs/BT02_thuyet-minh.md`): tải tập
+  trung/vệt từ tầng trên; tải đúng gối chỉ tăng phản lực, M(x) không đổi;
+  tải lệch khớp tĩnh học; chồng chất tuyến tính hai tuyến kê (6 test).
+- Tổng test 30/30 pass. Mốc M1 hoàn thành; bước tiếp theo: BT03 đầy đủ (M2).
+
 ## 0.2.1 — 16/11/2026 — Đồng bộ Skill + Plan v0.5.0 (không tính toán mới)
 
 - Lưu Skill fem-web mới vào `docs/Skill_fem-web.md` và Plan v0.5.0 vào
