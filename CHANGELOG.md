@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## 0.4.0 — 16/11/2026 — Giao diện web BT01/BT02 (một phần M6)
+
+- Trang module `src/ui/xep-coc.html` + `src/ui/app.js`: chọn 1 trong 33 mã cọc,
+  nhập L/x1/x2/E_b/γ_c, thêm tải điểm/vệt (BT02); tính ngay trường hợp mốc
+  PHC-B500 khi mở trang. Hiển thị: thẻ kết quả R/M/Q/võng, sơ đồ dọc cọc (SVG:
+  cọc, gối, tải, phản lực, kích thước a1/nhịp/a2), biểu đồ M(x)/Q(x)/chuyển vị
+  (Plotly.js), bảng trạm kiểm tra. Tách rõ tham khảo/đầu vào/kết quả tự tính.
+- `src/ui/inputs.js` (đọc/kiểm tra nhập liệu, đổi sang SI) và `src/ui/diagrams.js`
+  (chuỗi biểu đồ + SVG) viết dạng hàm thuần, có test node: 7 test UI mới,
+  tổng 37/37 pass. Mở trang qua máy chủ tĩnh (xem README mục Chạy web).
+- Dashboard `index.html` liên kết tới trang module.
+
 ## 0.3.0 — 16/11/2026 — Mốc M1: BT01 + BT02 (bài dầm cơ bản)
 
 - Lõi tính chuẩn SI (m, N, Pa) chốt từ BT01: `src/core/fem_solver.js`

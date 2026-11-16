@@ -22,7 +22,11 @@ lịch sử. Thuyết minh từng bài trong `docs/`.
   (`src/modules/xep-coc/bt02.js`). Tải đúng gối chỉ tăng phản lực, M(x) không
   đổi; tải lệch khớp tĩnh học; chồng chất tuyến tính hai tuyến kê. Xem
   `docs/BT02_thuyet-minh.md`, test 6/6.
-- Tổng test 30/30 pass (`node --test tests/*.test.mjs`). **Mốc M1 hoàn thành.**
+- Tổng test 37/37 pass (`node --test tests/*.test.mjs`). **Mốc M1 hoàn thành.**
+- **Giao diện web BT01/BT02 (v0.4.0):** mở `src/ui/xep-coc.html` qua máy chủ tĩnh
+  (xem `README.md` mục Chạy web) — chọn 1 trong 33 mã cọc, nhập L, x1, x2, thêm
+  tải điểm/vệt, xem sơ đồ dọc cọc, biểu đồ M(x)/Q(x)/chuyển vị (Plotly) và bảng
+  trạm kiểm tra. Số liệu tham khảo và kết quả tự tính tách rõ trên giao diện.
 - **BT03 (phần 1) — chỉ còn là đối chiếu chẩn đoán:** σ_pc tính ngược theo
   TCVN 7888 §6.5/§6.6 (A 4, AB 6, B 8, C 10 MPa), σ_pe 678–878 MPa. Xem
   `docs/BT03_backcheck_sigma_pc.md`, `src/modules/xep-coc/prestress.js`, test
@@ -59,6 +63,19 @@ tools/           # extract_pile_specs.py — trich xuat PDF -> pile_specs.json
 ```bash
 node --test tests/*.test.mjs
 ```
+
+## Chạy web (giao diện BT01/BT02)
+
+Trang dùng ES Modules nên phải mở qua máy chủ HTTP, không mở trực tiếp bằng
+file://. Từ thư mục gốc của repo:
+
+```bash
+python3 -m http.server 8000
+```
+
+Rồi mở http://localhost:8000/src/ui/xep-coc.html (Dashboard ở
+http://localhost:8000/). Repo đang riêng tư nên chưa bật GitHub Pages; muốn
+có link công khai thì Danh bật Pages hoặc chuyển repo sang công khai rồi báo mình.
 
 ## Đơn vị nội bộ
 

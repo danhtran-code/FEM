@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Xếp cọc PHC — BT01/BT02: một cọc, hai gối</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-800">
+<header class="bg-blue-900 text-white">
+  <div class="max-w-6xl mx-auto px-4 py-4">
+    <h1 class="text-xl font-bold">Xếp cọc PHC — BT01 / BT02</h1>
+    <p class="text-sm text-blue-200">Một cọc đặt trên hai gối, có hai đoạn hẫng — chỉ tự trọng (BT01), thêm tải tầng trên (BT02).
+      Cơ sở chính: TCVN 5574:2018 · Lõi tính SI (m, N, Pa) · Plan v0.5.0, mốc M1.</p>
+  </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-4 py-4 grid gap-4 lg:grid-cols-5">
+  <!-- Cột nhập liệu -->
+  <section class="lg:col-span-2 space-y-4">
+    <div class="bg-white rounded shadow p-4">
+      <h2 class="font-bold mb-2">1 · Chọn cọc <span class="text-xs font-normal text-slate-500">(tham khảo)</span></h2>
+      <select id="pile-select" class="w-full border rounded px-2 py-2"></select>
+      <div id="ref-panel" class="mt-3"></div>
+    </div>
+
+    <div class="bg-white rounded shadow p-4">
+      <h2 class="font-bold mb-2">2 · Hình học &amp; vật liệu <span class="text-xs font-normal text-slate-500">(đầu vào)</span></h2>
+      <div class="grid grid-cols-2 gap-3 text-sm">
+        <label class="block">Chiều dài cọc L (m)
+          <input id="input-L" type="number" step="any" min="0" value="12" class="w-full border rounded px-2 py-1 mt-1"></label>
+        <label class="block">E<sub>b</sub> (MPa)
+          <input id="input-Eb" type="number" step="any" min="0" value="42000" class="w-full border rounded px-2 py-1 mt-1"></label>
+        <label class="block">Gối 1 — x1 (m)
+          <input id="input-x1" type="number" step="any" min="0" value="2.4" class="w-full border rounded px-2 py-1 mt-1"></label>
+        <label class="block">Gối 2 — x2 (m)
+          <input id="input-x2" type="number" step="any" min="0" value="9.6" class="w-full border rounded px-2 py-1 mt-1"></label>
+        <label class="block col-span-2">γ<sub>c</sub> (kN/m³)
+          <input id="input-gamma" type="number" step="any" min="0" value="25" class="w-full border rounded px-2 py-1 mt-1"></label>
+      </div>
+      <p class="text-xs text-slate-500 mt-2">L do người dùng nhập; E<sub>b</sub> = 42 GPa theo TCVN 5574 B80,
+        γ<sub>c</sub> = 25 kN/m³ theo tiêu chuẩn. Đổi L phải tính lại toàn bộ.</p>
+    </div>
+
+    <div class="bg-white rounded shadow p-4">
+      <h2 class="font-bold mb-2">3 · Tải tầng trên <span class="text-xs font-normal text-slate-500">(BT02 — để trống = BT01)</span></h2>
+      <table class="w-full text-sm">
+        <thead><tr class="text-left text-slate-500">
+          <th class="pr-2">Loại</th><th class="pr-2">P (kN)</th><th class="pr-2">x (m)</th><th class="pr-2">Dài vệt (m)</th><th></th>
+        </tr></thead>
+        <tbody id="loads-body"></tbody>
+      </table>
+      <button id="btn-add-load" type="button" class="mt-2 text-sm text-blue-700 border border-blue-700 rounded px-3 py-1">+ Thêm tải</button>
+    </div>
+
+    <div id="form-errors" class="hidden bg-red-50 border border-red-300 text-red-800 rounded p-3 text-sm"></div>
+    <button id="btn-run" type="button" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold rounded py-2">Tính toán</button>
+    <p class="text-xs text-slate-500">Kết quả tự tính (computed) chỉ đọc. Kiểm tra tiết diện uốn/cắt/nứt
+      theo TCVN 5574 là BT03 — chưa có ở bản này, trang chỉ thể hiện nội lực.</p>
+  </section>
+
+  <!-- Cột kết quả -->
+  <section id="results" class="lg:col-span-3 space-y-4 hidden">
+    <div class="bg-white rounded shadow p-4">
+      <div class="flex items-baseline justify-between flex-wrap gap-2">
+        <h2 class="font-bold">Kết quả</h2>
+        <span id="bt-label" class="text-sm bg-blue-100 text-blue-800 rounded px-2 py-0.5"></span>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mt-3 text-sm">
+        <div class="bg-slate-50 rounded p-2"><div class="text-slate-500">Phản lực R1</div><div id="res-R1" class="font-bold text-base"></div></div>
+        <div class="bg-slate-50 rounded p-2"><div class="text-slate-500">Phản lực R2</div><div id="res-R2" class="font-bold text-base"></div></div>
+        <div class="bg-slate-50 rounded p-2"><div class="text-slate-500">M max</div><div id="res-Mmax" class="font-bold text-base"></div></div>
+        <div class="bg-slate-50 rounded p-2"><div class="text-slate-500">M min</div><div id="res-Mmin" class="font-bold text-base"></div></div>
+        <div class="bg-slate-50 rounded p-2"><div class="text-slate-500">|Q| max</div><div id="res-Qmax" class="font-bold text-base"></div></div>
+        <div class="bg-slate-50 rounded p-2"><div class="text-slate-500">Võng lớn nhất</div><div id="res-vmax" class="font-bold text-base"></div></div>
+      </div>
+      <p id="res-equilibrium" class="text-xs text-slate-500 mt-2"></p>
+    </div>
+
+    <div class="bg-white rounded shadow p-4">
+      <h2 class="font-bold mb-2">Sơ đồ dọc cọc</h2>
+      <div id="schematic"></div>
+    </div>
+
+    <div class="bg-white rounded shadow p-4">
+      <h2 class="font-bold mb-2">Biểu đồ mômen M(x)</h2>
+      <div id="chart-M" class="w-full" style="height:280px"></div>
+    </div>
+    <div class="bg-white rounded shadow p-4">
+      <h2 class="font-bold mb-2">Biểu đồ lực cắt Q(x)</h2>
+      <div id="chart-Q" class="w-full" style="height:280px"></div>
+    </div>
+    <div class="bg-white rounded shadow p-4">
+      <h2 class="font-bold mb-2">Biểu đồ chuyển vị (dương hướng xuống)</h2>
+      <div id="chart-v" class="w-full" style="height:280px"></div>
+    </div>
+
+    <div class="bg-white rounded shadow p-4">
+      <h2 class="font-bold mb-2">Bảng các trạm kiểm tra</h2>
+      <table class="w-full text-sm">
+        <thead><tr class="text-left text-slate-500 border-b">
+          <th class="py-1 pr-2">Trạm</th><th class="py-1 pr-2 text-right">x (m)</th>
+          <th class="py-1 pr-2 text-right">M (kN·m)</th><th class="py-1 pr-2 text-right">Q (kN)</th>
+          <th class="py-1 text-right">Võng xuống (mm)</th>
+        </tr></thead>
+        <tbody id="station-table"></tbody>
+      </table>
+      <p class="text-xs text-slate-500 mt-2">Q lấy phía phải trạm. Đầu hẫng có thể võng lên (số âm) —
+        xem hiệu chính mốc chuẩn trong <a class="text-blue-700 underline" href="../docs/BT01_thuyet-minh.md">thuyết minh BT01 §6</a>.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="max-w-6xl mx-auto px-4 pb-6 text-xs text-slate-500">
+  <p>Xếp cọc PHC · Plan v0.5.0 · Skill fem-web · Mốc M1 (BT00–BT02) + giao diện BT01/BT02.
+    <a class="text-blue-700 underline" href="../../index.html">← Về Dashboard</a> ·
+    <a class="text-blue-700 underline" href="../docs/BT01_thuyet-minh.md">Thuyết minh BT01</a> ·
+    <a class="text-blue-700 underline" href="../docs/BT02_thuyet-minh.md">Thuyết minh BT02</a></p>
+  <p class="mt-1">Chạy bằng máy chủ tĩnh (GitHub Pages / web server nội bộ / <code>python3 -m http.server</code>);
+    không mở trực tiếp bằng file:// vì dùng ES Modules.</p>
+</footer>
+
+<script type="module" src="./app.js"></script>
+</body>
+</html>
