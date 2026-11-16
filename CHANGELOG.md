@@ -1,5 +1,23 @@
 # CHANGELOG
 
+## 0.4.2 — 16/11/2026 — Đổi chiều biểu đồ mômen theo quy ước
+
+- Biểu đồ M(x) đảo chiều trục y (Plotly `autorange: 'reversed'`): mômen dương
+  (võng xuống) vẽ xuống dưới, mômen âm (vồng lên) vẽ lên trên. Giá trị M và
+  hover giữ nguyên dấu; chỉ hướng vẽ đổi. Ghi rõ quy ước trên tiêu đề biểu đồ.
+- Tổng test 39/39 pass.
+
+## 0.4.1 — 16/11/2026 — Trang chủ mở thẳng giao diện + sửa lỗi hiển thị
+
+- `index.html` (trang chủ GitHub Pages) chuyển thẳng tới giao diện module
+  `src/ui/xep-coc.html` — mở https://danhtran-code.github.io/FEM/ là thấy ngay
+  sơ đồ + biểu đồ, không còn trang dashboard chữ thuần.
+- Sửa lỗi hiển thị f_pu = undefined: `app.js` đọc sai tên trường
+  (`pc.fpu_MPa` thay vì `pc.f_pu_MPa` trong pile_specs.json); thêm test hồi quy
+  `tests/ui_app_refs.test.mjs` khóa tên trường UI theo schema JSON.
+- Sơ đồ SVG: đưa tiêu đề mã cọc lên trên để không chồng lên mũi tên tự trọng.
+- Tổng test 38/38 pass.
+
 ## 0.4.0 — 16/11/2026 — Giao diện web BT01/BT02 (một phần M6)
 
 - Trang module `src/ui/xep-coc.html` + `src/ui/app.js`: chọn 1 trong 33 mã cọc,

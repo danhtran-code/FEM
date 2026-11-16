@@ -5,7 +5,7 @@ import { findPile } from '../modules/xep-coc/pile_specs.js';
 import { analyseSinglePile } from '../modules/xep-coc/bt01.js';
 import { analyseSinglePileWithLoads } from '../modules/xep-coc/bt02.js';
 import { parseInputs, fmt } from './inputs.js';
-import { buildDiagramSeries, buildStationTable, schematicSvg } from './diagrams.js';
+import { buildDiagramSeries, buildStationTable, schematicSvg, momentChartYAxis } from './diagrams.js';
 
 let SPECS = null;
 
@@ -61,7 +61,7 @@ function renderReference(pile) {
       <dt class="text-slate-500">Bản vẽ</dt><dd>Phan Vũ v${pile.drawing_version} (${pile.drawing_no})</dd>
       <dt class="text-slate-500">Do / Dp / Di</dt><dd>${pile.Do_mm} / ${pile.Dp_mm} / ${pile.Di_mm} mm</dd>
       <dt class="text-slate-500">Chiều dày t</dt><dd>${pile.t_mm} mm</dd>
-      <dt class="text-slate-500">Thép DƯL</dt><dd>${pc.N1}⌀${pc.d_mm} mm, f<sub>pu</sub> = ${pc.fpu_MPa} MPa</dd>
+      <dt class="text-slate-500">Thép DƯL</dt><dd>${pc.N1}⌀${pc.d_mm} mm, f<sub>pu</sub> = ${pc.f_pu_MPa} MPa</dd>
       <dt class="text-slate-500">M<sub>cr</sub> / M<sub>u</sub> (công bố)</dt><dd>${pile.Mcr_kNm} / ${pile.Mu_kNm} kN·m</dd>
       <dt class="text-slate-500">Tải thi công (công bố)</dt><dd>${pile.install_load_T} T</dd>
     </dl>
@@ -75,7 +75,7 @@ function supportLines(beam) {
   }));
 }
 
-function plotChart(id, series, yLabel, color) {
+function plotChart(id, series, yLabel, color, yaxisOverride) {
   const Plotly = globalThis.Plotly;
   const el = $(id);
   if (!Plotly) {
@@ -87,7 +87,7 @@ function plotChart(id, series, yLabel, color) {
   }], {
     margin: { l: 60, r: 20, t: 10, b: 45 },
     xaxis: { title: 'x dọc cọc (m)' },
-    yaxis: { title: yLabel, zeroline: true, zerolinecolor: '#cbd5e1' },
+    yaxis: yaxisOverride || { title: yLabel, zeroline: true, zerolinecolor: '#cbd5e1' },
     shapes: supportLines(series.beam),
     showlegend: false,
   }, { responsive: true, displaylogo: false });
@@ -118,7 +118,7 @@ function renderResults(result, isBT02) {
   });
 
   const series = buildDiagramSeries(beam);
-  plotChart('chart-M', { x_m: series.x_m, y: series.M_kNm, beam }, 'M (kN·m)', '#1d4ed8');
+  plotChart('chart-M', { x_m: series.x_m, y: series.M_kNm, beam }, 'M (kN·m, + xuống)', '#1d4ed8', momentChartYAxis());
   plotChart('chart-Q', { x_m: series.x_m, y: series.Q_kN, beam }, 'Q (kN)', '#047857');
   plotChart('chart-v', { x_m: series.x_m, y: series.vDown_mm, beam }, 'Chuyển vị (mm, + xuống)', '#b45309');
 

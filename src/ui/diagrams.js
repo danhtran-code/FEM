@@ -2,6 +2,21 @@
 // Không dùng DOM hay Plotly ở đây; app.js chỉ việc vẽ lại dữ liệu này.
 
 /**
+ * Trục y cho biểu đồ mômen — quy ước vẽ (Danh, 16/11/2026): mômen dương
+ * (võng xuống, sagging) vẽ xuống dưới, mômen âm (vồng lên, hogging) vẽ lên
+ * trên. Giá trị M giữ nguyên; chỉ đảo chiều trục y của Plotly
+ * (autorange: 'reversed') để hover vẫn hiện đúng dấu và giá trị.
+ */
+export function momentChartYAxis() {
+  return {
+    title: 'M (kN·m, + xuống)',
+    zeroline: true,
+    zerolinecolor: '#cbd5e1',
+    autorange: 'reversed',
+  };
+}
+
+/**
  * Lấy mẫu M(x), Q(x), v(x) dọc cọc từ kết quả beam.
  * @param {object} beam kết quả analyseBeam (có bendingMoment/shearForce/deflection).
  * @param {number} nPoints số điểm mẫu (mặc định 241).
@@ -75,7 +90,7 @@ export function schematicSvg({ pile_code, L_m, x1_m, x2_m, loads = [], reactions
   parts.push(`<text x="480" y="50" text-anchor="middle" font-size="13" fill="#64748b">tự trọng w = ${w_kN_per_m.toFixed(3)} kN/m ↓</text>`);
   // Thân cọc.
   parts.push(`<rect x="${px(0).toFixed(1)}" y="${Y - 8}" width="${(px(L_m) - px(0)).toFixed(1)}" height="16" fill="#bfdbfe" stroke="#1d4ed8" stroke-width="2"/>`);
-  parts.push(`<text x="480" y="${Y - 18}" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e3a8a">${esc(pile_code)} — L = ${L_m} m</text>`);
+  parts.push(`<text x="480" y="32" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e3a8a">${esc(pile_code)} — L = ${L_m} m</text>`);
   // Tải tầng trên (đỏ).
   for (const ld of loads) {
     const x = px(ld.x_m);

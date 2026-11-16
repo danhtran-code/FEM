@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { findPile } from '../src/modules/xep-coc/pile_specs.js';
 import { analyseSinglePile } from '../src/modules/xep-coc/bt01.js';
-import { buildDiagramSeries, buildStationTable, schematicSvg } from '../src/ui/diagrams.js';
+import { buildDiagramSeries, buildStationTable, schematicSvg, momentChartYAxis } from '../src/ui/diagrams.js';
 
 const specs = JSON.parse(readFileSync(new URL('../data_in/pile_specs.json', import.meta.url), 'utf-8'));
 const pile = findPile(specs, 'PHC-B500');
@@ -33,6 +33,15 @@ test('buildStationTable: 5 tram, M/Q tai goi khop', () => {
   assert.ok(Math.abs(rows[1].Q_kN - 10.433) < 0.01);
   assert.ok(Math.abs(rows[2].M_kNm - 10.433) < 0.01, 'M giua nhip');
   assert.ok(Math.abs(rows[0].M_kNm) < 1e-9 && Math.abs(rows[4].M_kNm) < 1e-9);
+});
+
+test('momentChartYAxis: M duong ve xuong, M am ve len (dao truc y, giu gia tri)', () => {
+  const axis = momentChartYAxis();
+  assert.equal(axis.autorange, 'reversed');
+  assert.ok(axis.title.includes('+ xuống'));
+  // Giá trị M không bị đổi dấu ở tầng dữ liệu — chỉ trục y đảo chiều.
+  const s = buildDiagramSeries(beam);
+  assert.ok(Math.abs(s.M_kNm[Math.round((6 / 12) * 240)] - 10.433) < 0.01, 'M(6) van duong 10,433');
 });
 
 test('schematicSvg: co ma coc, phan luc, kich thuoc a1/nhip/a2', () => {
