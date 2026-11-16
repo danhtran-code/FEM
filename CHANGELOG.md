@@ -1,5 +1,39 @@
 # CHANGELOG
 
+## 0.5.0 — 16/11/2026 — Mốc M2: BT03 đầy đủ + BT04–BT08
+
+- **BT03 đầy đủ** (`prestress_losses.js`, `section_checker.js`, `tcvn5574.js`,
+  `docs/BT03_thuyet-minh.md`, 16 test mới): tổn hao tự tính theo TCVN 5574:2018
+  §9.1 — chùng (207), chênh nhiệt (211, Δt mặc định 65 °C), khuôn/bệ (212),
+  neo (213), co ngót (215), từ biến (216), co ngắn đàn hồi lúc truyền lực —
+  σ_pe, P_eff, σ_pc(x), L_p (222), kiểm tra truyền lực (221); kiểm tra tiết
+  diện: Mcr (243), Mu (mô hình nội lực giới hạn tự xây dựng trên vành khuyên),
+  cắt (8.1.3, theo vùng đai), nứt (166)(245). B500: σ_pe ≈ 652 MPa,
+  σ_pc ≈ 7,16 MPa, Mcr ≈ 117,8 / Mu ≈ 261,5 kN·m (công bố 147,2 / 265 —
+  chênh do Mcr công bố là giá trị tối thiểu TCVN 7888, ghi rõ trong thuyết
+  minh, không hiệu chỉnh). **Hiệu chính:** R_bt,ser(B80) = 3,30 MPa,
+  R_bt(B80) = 2,10 MPa (Bảng 6/7 — bản trích xuất trước đó ghi nhầm 3,00/1,90
+  của B70). Phát hiện: đai giữa thân B500 không đạt tối thiểu (96) ⇒ Q_b
+  theo (97). Mọi công thức §9.1 đối chiếu trực tiếp với toàn văn TCVN 5574:2018.
+- **BT04** (`contact.js`, 6 test): tiếp xúc Hertz cọc–kê/cọc–cọc + nén cục bộ
+  §8.1.5 (116)–(118). B500 tại gối: a ≈ 1,13 mm, p0 ≈ 98 MPa, U ≈ 1,05 —
+  vượt nhẹ giới hạn lý tưởng (mô hình cứng thiên về an toàn; kê rộng gấp đôi
+  ⇒ U = 0,74). Cọc–cọc U ≈ 0,10.
+- **BT05** (`ring.js`, 6 test): uốn vòng/nứt thành cọc, M(θ) = P·r_m·(1/π −
+  sinθ/2) (kiểm chứng bằng Castigliano). B500 tại kê: σ thớ trong ≈ 8,40 MPa,
+  U_nứt ≈ 2,55 — sàng lọc 2D thiên về an toàn (cần L_eff ≈ 0,255 m để không
+  nứt; hiệu ứng vỏ 3D và đai sau nứt chưa kể).
+- **BT06** (`rigid_bearer.js`, 6 test): kê gỗ 100×100 cứng — vật rắn 2 bậc tự
+  do trên gối đàn hồi BT01; không chia đều mặc định; mất tiếp xúc, lật kê.
+- **BT07** (`lateral_restraint.js`, 4 test): ràng buộc giữ ngang lý tưởng;
+  S1 đối xứng ⇒ phản lực ngang = 0.
+- **BT08** (`bottom_bearers.js`, 4 test): kê đáy trên nền cứng không lún;
+  tổng phản lực = tổng tải; API không nhận thông số nền.
+- `data_in/support_ground_specs.json`: cấu hình kê gỗ 100×100 cứng + biên lý
+  tưởng cho BT06/BT08. Xem `docs/BT04-BT08_thuyet-minh.md`.
+- Tổng test 81/81 pass (39 cũ + 42 mới). Mốc M2 hoàn thành; tiếp theo: M3
+  (BT10–BT11, S2).
+
 ## 0.4.2 — 16/11/2026 — Đổi chiều biểu đồ mômen theo quy ước
 
 - Biểu đồ M(x) đảo chiều trục y (Plotly `autorange: 'reversed'`): mômen dương
