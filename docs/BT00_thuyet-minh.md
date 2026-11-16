@@ -13,7 +13,7 @@ dùng chung một nguồn dữ liệu duy nhất thay vì gõ tay từng thông 
 
 - Nguồn: `Ref/06. COC BTLT ULT- BPTC DONG COC/` — 33 bản vẽ riêng (01–33) + file
   `00. COC DONG_PHC_ALL.pdf` là bản tổng hợp cùng 33 bản vẽ, không phải mã cọc thứ 34.
-- Nhà sản xuất: Công ty Cổ phần Đầu tư Phan Vũ. Phiên bản bản vẽ 1.2, phát hành 11/2026.
+- Nhà sản xuất: Công ty Cổ phần Đầu tư Phan Vũ. Phiên bản bản vẽ: 24 bản 1.2 (D300–D700) + 9 bản 2.2 (D800–D1000), phát hành 11/2026 (đối chiếu từng file `Ref/txt/`, trường PHIÊN BẢN; sửa từ ghi chú cũ "v1.2 cho cả 33 bản" ở BT00-2).
   Thiết kế: Huỳnh Minh Phúc; kiểm tra: Trần Nguyễn Công Danh; phê duyệt: Lữ Triều Dương.
 - Tiêu chuẩn sản phẩm: TCVN 7888. Bê tông 80 MPa, mẫu trụ D150×H300.
   Thép DƯL: TCVN 6284-3 (JIS G3137), f_pu = 1420 MPa, f_py = 1275 MPa.

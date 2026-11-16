@@ -90,12 +90,25 @@ test('BT00: validate tat ca ban ghi; Mu/Mcr trong khoang hop ly', () => {
   }
 });
 
-test('BT00: trang thai du lieu — mac thep GC/dai va L van la thieu; sigma_pc/Eb/Ep/gamma da xac dinh theo tieu chuan', () => {
+test('BT00: phien ban ban ve — 24 ban 1.2 (D300-D700), 9 ban 2.2 (D800-D1000)', () => {
+  // Doi chieu tung file Ref/txt: truong PHIEN BAN, file 01-24 = 1.2, 25-33 = 2.2.
+  for (const p of specs.piles) {
+    const expected = p.Do_mm <= 700 ? '1.2' : '2.2';
+    assert.equal(p.drawing_version, expected, `${p.code} Do=${p.Do_mm}`);
+  }
+  assert.equal(specs.piles.filter((p) => p.drawing_version === '1.2').length, 24);
+  assert.equal(specs.piles.filter((p) => p.drawing_version === '2.2').length, 9);
+  assert.equal(specs.schema_version, 'BT00-3');
+});
+
+test('BT00: trang thai du lieu — mac thep GC/dai, L va sigma_pc hieu luc van la thieu; Eb/Ep/gamma da xac dinh theo tieu chuan', () => {
   for (const p of specs.piles) {
     const s = dataStatus(p);
     const missing = s.thieu.map((x) => x.field);
     for (const f of ['GC bar grade', 'spiral steel grade', 'L']) assert.ok(missing.includes(f), `${p.code} thieu ${f}`);
-    assert.ok(!missing.includes('sigma_pc'), `${p.code}: sigma_pc da xac dinh theo TCVN 7888 §6.5`);
-    assert.equal(s.back_check_available, true); // co Mcr/Mu de doi chieu o BT03
+    // Plan v0.5.0: sigma_pc hieu luc sau ton hao chua co — BT03 phan 1 chi la
+    // doi chieu nguoc tu Mcr/Mu theo cap tai, chi dung tham khao.
+    assert.ok(missing.some((f) => f.startsWith('sigma_pc')), `${p.code}: sigma_pc hieu luc phai o trang thai thieu cho den BT03 day du`);
+    assert.equal(s.back_check_available, true); // co Mcr/Mu de doi chieu chan doan o BT03 phan 1
   }
 });

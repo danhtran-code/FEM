@@ -2,6 +2,13 @@
 
 **Phiên bản:** BT00-2 — 16/11/2026
 **Trạng thái:** Đã kiểm chứng bằng test hồi quy (5 test BT03 + 7 test BT00 = 12/12 pass).
+
+> ⚠️ **Đổi trạng thái theo Plan v0.5.0 (16/11/2026): chỉ còn là ĐỐI CHIẾU CHẨN ĐOÁN.**
+> Không dùng σ_pc/σ_pe suy từ `M_cr/M_u` hay cấp tải A/AB/B/C làm đầu vào hay ngưỡng
+> tính. BT03 đầy đủ phải tự tính từng khoản tổn hao và dự ứng lực hữu hiệu theo
+> TCVN 5574:2018 §9.1 (căng trước cơ khí, hầm sấy vài giờ → tháo khuôn → dưỡng hộ
+> tự nhiên). Các con số dưới đây và test hồi quy được giữ nguyên vì phép tính số học
+> vẫn đúng với vai trò đối chiếu; chỉ đổi trạng thái sử dụng.
 **Kết quả chính:** σ_pc (σ_ce) theo cấp tải — A 4 MPa, AB 6 MPa, B 8 MPa, C 10 MPa.
 
 ## 1. Tên bài và mục tiêu

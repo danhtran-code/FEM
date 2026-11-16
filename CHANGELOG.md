@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## 0.2.1 — 16/11/2026 — Đồng bộ Skill + Plan v0.5.0 (không tính toán mới)
+
+- Lưu Skill fem-web mới vào `docs/Skill_fem-web.md` và Plan v0.5.0 vào
+  `docs/Plan_XepCoc_v0.5.0.md` (giữ `Plan_XepCoc_v0.3.1.md` để đối chiếu).
+  TCVN 5574:2018 là cơ sở chính; TCVN 7888 chỉ đối chiếu sản phẩm/lưu kho.
+- BT00 schema BT00-2 → BT00-3: thêm `drawing_version` từng mã — 24 bản v1.2
+  (D300–D700) + 9 bản v2.2 (D800–D1000), đối chiếu từng file `Ref/txt/`
+  (trường PHIÊN BẢN); sửa ghi chú cũ "v1.2 cho cả 33 bản". Thêm test
+  phiên bản bản vẽ; `tests/bt00.test.mjs` 7/7 → 8/8, tổng 13/13 pass.
+- BT03 phần 1 đổi trạng thái thành **đối chiếu chẩn đoán**: không dùng σ_pc/σ_pe
+  suy từ `M_cr/M_u` hay cấp tải làm đầu vào/ngưỡng tính (Plan v0.5.0 §6.3, §7.1);
+  BT03 đầy đủ phải tự tính tổn hao theo TCVN 5574 §9.1. Code/test/số liệu giữ
+  nguyên, chỉ đổi trạng thái; `dataStatus` nay ghi σ_pc hữu hiệu là thiếu.
+- Ghi rõ tồn đọng: lõi BT00 vẫn dùng mm/N/MPa (đã trả kèm tương đương SI);
+  việc chuyển lõi sang SI m–N–Pa theo Plan §6.4 sẽ chốt ở bước BT01.
+- Bước tiếp theo: BT01 (một cọc, hai gối, tự trọng) — chờ Danh kiểm tra bước này.
+
 ## 0.2.0 — 16/11/2026 — BT00-2 / BT03 (phần 1: σ_pc tính ngược)
 
 - σ_pc (σ_ce) xác định theo TCVN 7888:2014 §6.5: A 4, AB 6, B 8, C 10 MPa (±5%);

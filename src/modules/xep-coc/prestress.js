@@ -1,6 +1,14 @@
 // BT00/BT03 — Ứng suất hữu hiệu sigma_pc (sigma_ce) tính ngược từ bản vẽ,
 // theo TCVN 7888:2014 và phương pháp JIS A 5337 (Phụ lục A TCVN 7888).
 //
+// ⚠️ TRẠNG THÁI theo Plan v0.5.0 (16/11/2026): đây chỉ là ĐỐI CHIẾU CHẨN ĐOÁN.
+// Không dùng các giá trị sigma_pc/sigma_pe suy từ Mcr/Mu hay cấp tải A/AB/B/C
+// làm đầu vào hay ngưỡng tính. BT03 đầy đủ phải tự tính từng khoản tổn hao
+// và dự ứng lực hữu hiệu theo TCVN 5574:2018 §9.1 (căng trước cơ khí, hầm sấy
+// vài giờ → tháo khuôn → dưỡng hộ tự nhiên). Code và test dưới đây được giữ
+// nguyên vì phép tính số học vẫn đúng với vai trò đối chiếu; chỉ đổi trạng thái
+// sử dụng, không đổi kết quả số.
+//
 // NGUỒN CHÍNH (không trộn hệ số giữa các hệ tiêu chuẩn):
 // - TCVN 7888:2014 §6.5: sigma_ce tính toán theo cấp tải A/AB/B/C lần lượt
 //   là 4 / 6 / 8 / 10 MPa, sai số cho phép ±5%. Đây là giá trị THIẾT KẾ

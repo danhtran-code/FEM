@@ -1,5 +1,10 @@
 // BT00 — Chuẩn hóa thông số cọc, phân vùng section(x), vật liệu, đơn vị, nguồn.
-// Đơn vị nội bộ: mm, N, MPa (= N/mm2), kN.m cho mômen công bố trên bản vẽ.
+// Plan v0.5.0 (16/11/2026): thư viện 33 mã gồm 24 bản vẽ v1.2 (D300–D700)
+// và 9 bản v2.2 (D800–D1000), trường drawing_version từng mã trong pile_specs.json.
+// Đơn vị nội bộ BT00: mm, N, MPa (= N/mm2), kN.m cho mômen công bố trên bản vẽ;
+// các hàm đã trả kèm tương đương SI (A_m2, I_m4, W_m3). Plan v0.5.0 §6.4 yêu cầu
+// lõi tính chuẩn SI m–N–Pa — việc chuyển lõi sang SI sẽ chốt ở bước BT01, không
+// đổi ngầm đơn vị trong bước đồng bộ này.
 // sigma_pc (sigma_ce), E_b, E_p, gamma_c KHÔNG có trên bản vẽ — đã xác định
 // theo tiêu chuẩn, xem prestress.js (TCVN 7888 §6.5/§6.6, TCVN 5574, EC2,
 // AASHTO/JIS). gamma_c mặc định 25 kN/m3 theo tiêu chuẩn (xem selfWeightPerMetre).
@@ -88,8 +93,10 @@ export function dataStatus(pile) {
       { field: 'GC bar grade', reason: 'ban ve chi ghi duong kinh/so luong GC, khong ghi mac thep' },
       { field: 'spiral steel grade', reason: 'chi ghi SWM-C (JIS G 3532), khong ghi cuong do' },
       { field: 'L', reason: 'chieu dai doan coc la thong so tinh toan, nguoi dung chon trong khoang TCVN 7888 Bang 1 (xem lengthRange)' },
+      { field: 'sigma_pc hieu luc sau ton hao (TCVN 5574)', reason: 'BT03 phan 1 chi doi chieu nguoc tu Mcr/Mu theo cap tai — theo Plan v0.5.0 chi dung tham khao, khong dung lam dau vao; BT03 day du phai tinh ton hao theo TCVN 5574 §9.1' },
     ],
-    // Mcr/Mu co san de doi chieu nguoc sigma_pc o BT03 (theo Plan 6.1).
+    // Mcr/Mu chi de doi chieu chan doan (BT03 phan 1); theo Plan v0.5.0
+    // khong dung lam dau vao hay nguong tinh cho BT03 day du.
     back_check_available: pile.Mcr_kNm != null && pile.Mu_kNm != null,
   };
 }
