@@ -1,0 +1,2750 @@
+{
+  "schema_version": "BT00-2",
+  "source": {
+    "library": "Phan Vu standard PHC drawings, version 1.2, issued 11/2026",
+    "standard": "TCVN 7888",
+    "manufacturer": "Cong ty Co phan Dau tu Phan Vu",
+    "files": "Ref/06. COC BTLT ULT- BPTC DONG COC/ (33 individual PDFs + 00 ALL compilation)",
+    "extraction": "pdftotext -layout, parsed by tools/extract_pile_specs.py; every record cross-checked against its PDF table row",
+    "note": "00. COC DONG_PHC_ALL.pdf is a compilation of the same 33 drawings, not a 34th pile type."
+  },
+  "units": {
+    "length": "mm",
+    "force": "N",
+    "stress": "MPa (= N/mm2)",
+    "moment": "kN.m",
+    "install_load": "T (tonne-force, as printed)"
+  },
+  "common": {
+    "concrete": {
+      "f_c_MPa": 80,
+      "specimen": "cylinder D150xH300",
+      "cement": "PCB40/PCB50 (TCVN 6260) or OPC40/OPC50 (TCVN 2682)"
+    },
+    "note_L": "Pile segment length L is NOT fixed on the drawings (drawing title PHC-...-L-...). L is a user input per BT00.",
+    "missing_from_drawings": [
+      "GC bar grade - drawing gives d/N2/L2 only, no steel grade",
+      "Spiral steel grade - SWM-C (JIS G 3532) only, no strength value",
+      "Pile mass per metre - not on drawing; computed from geometry with gamma_c=25 kN/m3 (standard), to be confirmed by weighing/manufacturer data",
+      "L - calculation parameter, user input (range in length_range_m per pile)"
+    ],
+    "status_rule": "A check that needs a missing value must report 'chua du du lieu' (insufficient data). Do not fill in an optimistic default silently.",
+    "materials_determined_by_standard": {
+      "concrete_80MPa_cyl": {
+        "Eb_MPa": 42000,
+        "Eb_source": "TCVN 5574:2018 B80 Table 10 (EC2 C80/95 Ecm 42200 MPa, AASHTO 4800*sqrt(80)=42933 MPa)",
+        "Rb_MPa_TCVN5574_B80": 41,
+        "Rbt_MPa_TCVN5574_B80": 2.1,
+        "Rbser_MPa": 57,
+        "Rbtser_MPa": 3.3,
+        "EC2_C80_95": {
+          "fck_MPa": 80,
+          "fcm_MPa": 88,
+          "fctm_MPa": 4.8,
+          "fctk005_MPa": 3.4,
+          "Ecm_MPa": 42200
+        },
+        "AASHTO": {
+          "fr_MPa": 5.64,
+          "Ec_MPa": 42933,
+          "Eci_MPa": 37181
+        },
+        "note": "TCVN 5574 B80: Rb/Rbt la cuong do tinh toan theo he TCVN; khong tron voi fck/fctm Eurocode khi kiem tra."
+      },
+      "pc_steel": {
+        "Ep_MPa": 200000,
+        "Ep_JIS_MPa": 196133,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "sigma_pi_MPa": 994,
+        "sigma_pi_source": "min(0,8*fpy, 0,7*fpu) — JIS A 5337 / Phu luc A TCVN 7888"
+      },
+      "gamma_c_kN_m3": 25,
+      "gamma_c_source": "be tong cot thep, TCVN 5574 / Eurocode 2; be tong ly tam co the 25-26 — can can thuc te xac nhan",
+      "sigma_ce": "TCVN 7888:2014 §6.5: A 4, AB 6, B 8, C 10 MPa (±5%)",
+      "length_m": "Thong so tinh toan, nguoi dung chon; khoang dien hinh theo TCVN 7888 Bang 1 (ghi chu: chieu dai toi da co the lon hon bang, tuy thiet ke/thiet bi)"
+    },
+    "notes_on_published_Mcr_Mu": [
+      "Mcr/Mu on Phan Vu drawings equal TCVN 7888 Table 1 minima for the same Do/class.",
+      "Phan Vu wall thickness t is thicker than TCVN Table 1 minimum t (e.g. D350: 65 vs 60 mm, D500: 90 vs 80 mm), so published Mcr is a standard minimum, not a recalculation for the thicker actual section.",
+      "Mu = kr*Mcr (kr 1.5/1.65/1.8/2.0) per TCVN 7888 §6.6 — matches published Mu within 0.3% for 33/33 piles; Mu is not an independent ultimate analysis.",
+      "Mcr back-check with sigma_ce nominal + fr=6.3 MPa: mean error +0.1%, mean |error| 2.2%, max 6.7% — consistent within rounding and the t difference above.",
+      "JIS forward loss calculation (sigma_bt=7.85 MPa) predicts Mcr 12-27% higher than published — do NOT use sigma_bt=7.85 MPa to back-calculate sigma_ce from published Mcr.",
+      "V cat (TCVN 7888 Bang 1) chi co cho cac cap tai liet ke trong bang; AB600 khong co V trong bang — de null, khong noi suy."
+    ]
+  },
+  "piles": [
+    {
+      "code": "PHC-A300",
+      "class": "A",
+      "Do_mm": 300.0,
+      "Dp_mm": 240.0,
+      "Di_mm": 180.0,
+      "Dei_mm": 180.0,
+      "t_mm": 60.0,
+      "pc_bar": {
+        "d_mm": 7.1,
+        "N1": 6,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 24.5,
+      "Mu_kNm": 36.7,
+      "gc_bar": null,
+      "spiral": {
+        "d_mm": 3.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 600.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 10.0,
+        "T_mm": 60.0,
+        "hc_mm": 60.0,
+        "tc_mm": 1.5,
+        "tc_splice_mm": null
+      },
+      "collar_detail": {
+        "w_mm": 3.0,
+        "h_mm": 8.0,
+        "hw1_mm": 1.0,
+        "Tm_mm": 6.0,
+        "Tg_mm": 10.0,
+        "hw2_mm": 5.0
+      },
+      "install_load_T": 130,
+      "drawing_no": "PHC-A300-D-CO30260000",
+      "drawing_title": "PHC-A300-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 4.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 757.8,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 4.56,
+        "sigma_pe_forward_JIS_MPa": 863.5,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 23.8,
+          "mcr_pub_kNm": 24.5,
+          "rel_err_pct": -3.0,
+          "fr_implied_MPa": 6.62
+        },
+        "mu_check": {
+          "kr": 1.5,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 36.8,
+          "mu_pub_kNm": 36.7,
+          "rel_err_pct": -0.1
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 1.131,
+        "mass_kg_per_m": 115.3
+      },
+      "length_range_m": [
+        6,
+        13
+      ],
+      "shear_capacity_kN_TCVN7888": 99.1
+    },
+    {
+      "code": "PHC-B300",
+      "class": "B",
+      "Do_mm": 300.0,
+      "Dp_mm": 240.0,
+      "Di_mm": 180.0,
+      "Dei_mm": 180.0,
+      "t_mm": 60.0,
+      "pc_bar": {
+        "d_mm": 9.0,
+        "N1": 8,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 34.3,
+      "Mu_kNm": 61.7,
+      "gc_bar": null,
+      "spiral": {
+        "d_mm": 3.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 600.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 14.0,
+        "T_mm": 60.0,
+        "hc_mm": 60.0,
+        "tc_mm": 1.5,
+        "tc_splice_mm": null
+      },
+      "collar_detail": {
+        "w_mm": 3.0,
+        "h_mm": 8.0,
+        "hw1_mm": 1.0,
+        "Tm_mm": 6.0,
+        "Tg_mm": 10.0,
+        "hw2_mm": 5.0
+      },
+      "install_load_T": 125,
+      "drawing_no": "PHC-B300-D-CO30260000",
+      "drawing_title": "PHC-B300-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 8.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 703.1,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 8.95,
+        "sigma_pe_forward_JIS_MPa": 786.2,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 33.0,
+          "mcr_pub_kNm": 34.3,
+          "rel_err_pct": -3.8,
+          "fr_implied_MPa": 6.87
+        },
+        "mu_check": {
+          "kr": 1.8,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 61.7,
+          "mu_pub_kNm": 61.7,
+          "rel_err_pct": -0.1
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 1.131,
+        "mass_kg_per_m": 115.3
+      },
+      "length_range_m": [
+        6,
+        13
+      ],
+      "shear_capacity_kN_TCVN7888": 125.6
+    },
+    {
+      "code": "PHC-C300",
+      "class": "C",
+      "Do_mm": 300.0,
+      "Dp_mm": 240.0,
+      "Di_mm": 180.0,
+      "Dei_mm": 180.0,
+      "t_mm": 60.0,
+      "pc_bar": {
+        "d_mm": 9.0,
+        "N1": 10,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 39.2,
+      "Mu_kNm": 78.4,
+      "gc_bar": null,
+      "spiral": {
+        "d_mm": 3.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 600.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 16.0,
+        "T_mm": 60.0,
+        "hc_mm": 60.0,
+        "tc_mm": 1.5,
+        "tc_splice_mm": null
+      },
+      "collar_detail": {
+        "w_mm": 4.0,
+        "h_mm": 10.0,
+        "hw1_mm": 1.0,
+        "Tm_mm": 6.0,
+        "Tg_mm": 10.0,
+        "hw2_mm": 5.0
+      },
+      "install_load_T": 120,
+      "drawing_no": "PHC-C300-D-CO30260000",
+      "drawing_title": "PHC-C300-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 10.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 701.1,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 10.74,
+        "sigma_pe_forward_JIS_MPa": 753.3,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 37.6,
+          "mcr_pub_kNm": 39.2,
+          "rel_err_pct": -4.1,
+          "fr_implied_MPa": 6.99
+        },
+        "mu_check": {
+          "kr": 2.0,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 78.4,
+          "mu_pub_kNm": 78.4,
+          "rel_err_pct": 0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 1.131,
+        "mass_kg_per_m": 115.3
+      },
+      "length_range_m": [
+        6,
+        13
+      ],
+      "shear_capacity_kN_TCVN7888": 136.4
+    },
+    {
+      "code": "PHC-A350",
+      "class": "A",
+      "Do_mm": 350.0,
+      "Dp_mm": 285.0,
+      "Di_mm": 220.0,
+      "Dei_mm": 220.0,
+      "t_mm": 65.0,
+      "pc_bar": {
+        "d_mm": 7.1,
+        "N1": 7,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 34.3,
+      "Mu_kNm": 51.5,
+      "gc_bar": null,
+      "spiral": {
+        "d_mm": 3.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 700.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 10.0,
+        "T_mm": 65.0,
+        "hc_mm": 60.0,
+        "tc_mm": 1.5,
+        "tc_splice_mm": null
+      },
+      "collar_detail": {
+        "w_mm": 3.0,
+        "h_mm": 8.0,
+        "hw1_mm": 1.0,
+        "Tm_mm": 6.0,
+        "Tg_mm": 10.0,
+        "hw2_mm": 5.0
+      },
+      "install_load_T": 180,
+      "drawing_no": "PHC-A350-D-CO35260000",
+      "drawing_title": "PHC-A350-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 4.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 836.0,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 4.16,
+        "sigma_pe_forward_JIS_MPa": 870.2,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 36.6,
+          "mcr_pub_kNm": 34.3,
+          "rel_err_pct": 6.7,
+          "fr_implied_MPa": 5.66
+        },
+        "mu_check": {
+          "kr": 1.5,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 51.4,
+          "mu_pub_kNm": 51.5,
+          "rel_err_pct": 0.1
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 1.455,
+        "mass_kg_per_m": 148.4
+      },
+      "length_range_m": [
+        6,
+        15
+      ],
+      "shear_capacity_kN_TCVN7888": 118.7
+    },
+    {
+      "code": "PHC-B350",
+      "class": "B",
+      "Do_mm": 350.0,
+      "Dp_mm": 285.0,
+      "Di_mm": 220.0,
+      "Dei_mm": 220.0,
+      "t_mm": 65.0,
+      "pc_bar": {
+        "d_mm": 9.0,
+        "N1": 10,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 49.0,
+      "Mu_kNm": 88.2,
+      "gc_bar": null,
+      "spiral": {
+        "d_mm": 3.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 700.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 16.0,
+        "T_mm": 65.0,
+        "hc_mm": 60.0,
+        "tc_mm": 1.5,
+        "tc_splice_mm": null
+      },
+      "collar_detail": {
+        "w_mm": 3.0,
+        "h_mm": 8.0,
+        "hw1_mm": 1.0,
+        "Tm_mm": 6.0,
+        "Tg_mm": 10.0,
+        "hw2_mm": 5.0
+      },
+      "install_load_T": 175,
+      "drawing_no": "PHC-B350-D-CO35260000",
+      "drawing_title": "PHC-B350-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 8.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 723.9,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 8.73,
+        "sigma_pe_forward_JIS_MPa": 790.1,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 50.8,
+          "mcr_pub_kNm": 49.0,
+          "rel_err_pct": 3.7,
+          "fr_implied_MPa": 5.79
+        },
+        "mu_check": {
+          "kr": 1.8,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 88.2,
+          "mu_pub_kNm": 88.2,
+          "rel_err_pct": 0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 1.455,
+        "mass_kg_per_m": 148.4
+      },
+      "length_range_m": [
+        6,
+        15
+      ],
+      "shear_capacity_kN_TCVN7888": 150.1
+    },
+    {
+      "code": "PHC-C350",
+      "class": "C",
+      "Do_mm": 350.0,
+      "Dp_mm": 285.0,
+      "Di_mm": 220.0,
+      "Dei_mm": 220.0,
+      "t_mm": 65.0,
+      "pc_bar": {
+        "d_mm": 9.0,
+        "N1": 12,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 58.9,
+      "Mu_kNm": 117.8,
+      "gc_bar": null,
+      "spiral": {
+        "d_mm": 3.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 700.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 16.0,
+        "T_mm": 65.0,
+        "hc_mm": 60.0,
+        "tc_mm": 1.5,
+        "tc_splice_mm": null
+      },
+      "collar_detail": {
+        "w_mm": 3.0,
+        "h_mm": 8.0,
+        "hw1_mm": 1.0,
+        "Tm_mm": 6.0,
+        "Tg_mm": 10.0,
+        "hw2_mm": 5.0
+      },
+      "install_load_T": 170,
+      "drawing_no": "PHC-C350-D-CO35260000",
+      "drawing_title": "PHC-C350-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 10.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 752.3,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 10.16,
+        "sigma_pe_forward_JIS_MPa": 764.1,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 57.9,
+          "mcr_pub_kNm": 58.9,
+          "rel_err_pct": -1.7,
+          "fr_implied_MPa": 6.58
+        },
+        "mu_check": {
+          "kr": 2.0,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 117.8,
+          "mu_pub_kNm": 117.8,
+          "rel_err_pct": 0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 1.455,
+        "mass_kg_per_m": 148.4
+      },
+      "length_range_m": [
+        6,
+        15
+      ],
+      "shear_capacity_kN_TCVN7888": 162.8
+    },
+    {
+      "code": "PHC-A400",
+      "class": "A",
+      "Do_mm": 400.0,
+      "Dp_mm": 320.0,
+      "Di_mm": 260.0,
+      "Dei_mm": 260.0,
+      "t_mm": 70.0,
+      "pc_bar": {
+        "d_mm": 7.1,
+        "N1": 10,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 54.0,
+      "Mu_kNm": 81.0,
+      "gc_bar": null,
+      "spiral": {
+        "d_mm": 3.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 800.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 12.0,
+        "T_mm": 70.0,
+        "hc_mm": 80.0,
+        "tc_mm": 1.5,
+        "tc_splice_mm": null
+      },
+      "collar_detail": {
+        "w_mm": 4.0,
+        "h_mm": 10.0,
+        "hw1_mm": 1.0,
+        "Tm_mm": 6.0,
+        "Tg_mm": 10.0,
+        "hw2_mm": 5.0
+      },
+      "install_load_T": 225,
+      "drawing_no": "PHC-A400-D-CO40260000",
+      "drawing_title": "PHC-A400-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 4.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 729.2,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 4.72,
+        "sigma_pe_forward_JIS_MPa": 860.7,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 53.2,
+          "mcr_pub_kNm": 54.0,
+          "rel_err_pct": -1.5,
+          "fr_implied_MPa": 6.46
+        },
+        "mu_check": {
+          "kr": 1.5,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 81.0,
+          "mu_pub_kNm": 81.0,
+          "rel_err_pct": 0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 1.814,
+        "mass_kg_per_m": 185.0
+      },
+      "length_range_m": [
+        6,
+        16
+      ],
+      "shear_capacity_kN_TCVN7888": 148.1
+    },
+    {
+      "code": "PHC-AB400",
+      "class": "AB",
+      "Do_mm": 400.0,
+      "Dp_mm": 320.0,
+      "Di_mm": 260.0,
+      "Dei_mm": 260.0,
+      "t_mm": 70.0,
+      "pc_bar": {
+        "d_mm": 9.0,
+        "N1": 10,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 64.0,
+      "Mu_kNm": 105.6,
+      "gc_bar": null,
+      "spiral": {
+        "d_mm": 3.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 800.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 16.0,
+        "T_mm": 70.0,
+        "hc_mm": 80.0,
+        "tc_mm": 1.5,
+        "tc_splice_mm": null
+      },
+      "collar_detail": {
+        "w_mm": 4.0,
+        "h_mm": 10.0,
+        "hw1_mm": 1.0,
+        "Tm_mm": 6.0,
+        "Tg_mm": 10.0,
+        "hw2_mm": 5.0
+      },
+      "install_load_T": 220,
+      "drawing_no": "PHC-AB400-D-CO40260000",
+      "drawing_title": "PHC-AB400-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 6.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 678.4,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 7.23,
+        "sigma_pe_forward_JIS_MPa": 817.0,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 63.5,
+          "mcr_pub_kNm": 64.0,
+          "rel_err_pct": -0.8,
+          "fr_implied_MPa": 6.4
+        },
+        "mu_check": {
+          "kr": 1.65,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 105.6,
+          "mu_pub_kNm": 105.6,
+          "rel_err_pct": 0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 1.814,
+        "mass_kg_per_m": 185.0
+      },
+      "length_range_m": [
+        6,
+        16
+      ],
+      "shear_capacity_kN_TCVN7888": 176.0
+    },
+    {
+      "code": "PHC-B400",
+      "class": "B",
+      "Do_mm": 400.0,
+      "Dp_mm": 320.0,
+      "Di_mm": 260.0,
+      "Dei_mm": 260.0,
+      "t_mm": 70.0,
+      "pc_bar": {
+        "d_mm": 9.0,
+        "N1": 12,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 73.6,
+      "Mu_kNm": 132.5,
+      "gc_bar": null,
+      "spiral": {
+        "d_mm": 3.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 800.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 16.0,
+        "T_mm": 70.0,
+        "hc_mm": 80.0,
+        "tc_mm": 1.5,
+        "tc_splice_mm": null
+      },
+      "collar_detail": {
+        "w_mm": 4.0,
+        "h_mm": 10.0,
+        "hw1_mm": 1.0,
+        "Tm_mm": 6.0,
+        "Tg_mm": 10.0,
+        "hw2_mm": 5.0
+      },
+      "install_load_T": 215,
+      "drawing_no": "PHC-B400-D-CO40260000",
+      "drawing_title": "PHC-B400-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 8.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 752.5,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 8.45,
+        "sigma_pe_forward_JIS_MPa": 795.1,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 73.8,
+          "mcr_pub_kNm": 73.6,
+          "rel_err_pct": 0.3,
+          "fr_implied_MPa": 6.26
+        },
+        "mu_check": {
+          "kr": 1.8,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 132.5,
+          "mu_pub_kNm": 132.5,
+          "rel_err_pct": 0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 1.814,
+        "mass_kg_per_m": 185.0
+      },
+      "length_range_m": [
+        6,
+        16
+      ],
+      "shear_capacity_kN_TCVN7888": 187.4
+    },
+    {
+      "code": "PHC-C400",
+      "class": "C",
+      "Do_mm": 400.0,
+      "Dp_mm": 320.0,
+      "Di_mm": 260.0,
+      "Dei_mm": 260.0,
+      "t_mm": 70.0,
+      "pc_bar": {
+        "d_mm": 9.0,
+        "N1": 15,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 88.3,
+      "Mu_kNm": 176.6,
+      "gc_bar": null,
+      "spiral": {
+        "d_mm": 3.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 800.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 16.0,
+        "T_mm": 70.0,
+        "hc_mm": 80.0,
+        "tc_mm": 1.5,
+        "tc_splice_mm": null
+      },
+      "collar_detail": {
+        "w_mm": 4.0,
+        "h_mm": 10.0,
+        "hw1_mm": 1.0,
+        "Tm_mm": 6.0,
+        "Tg_mm": 10.0,
+        "hw2_mm": 5.0
+      },
+      "install_load_T": 210,
+      "drawing_no": "PHC-C400-D-CO40260000",
+      "drawing_title": "PHC-C400-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 10.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 750.5,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 10.18,
+        "sigma_pe_forward_JIS_MPa": 763.8,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 84.1,
+          "mcr_pub_kNm": 88.3,
+          "rel_err_pct": -4.7,
+          "fr_implied_MPa": 7.11
+        },
+        "mu_check": {
+          "kr": 2.0,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 176.6,
+          "mu_pub_kNm": 176.6,
+          "rel_err_pct": 0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 1.814,
+        "mass_kg_per_m": 185.0
+      },
+      "length_range_m": [
+        6,
+        16
+      ],
+      "shear_capacity_kN_TCVN7888": 204.0
+    },
+    {
+      "code": "PHC-A450",
+      "class": "A",
+      "Do_mm": 450.0,
+      "Dp_mm": 370.0,
+      "Di_mm": 290.0,
+      "Dei_mm": 290.0,
+      "t_mm": 80.0,
+      "pc_bar": {
+        "d_mm": 9.0,
+        "N1": 7,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 73.6,
+      "Mu_kNm": 110.4,
+      "gc_bar": null,
+      "spiral": {
+        "d_mm": 3.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 900.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 14.0,
+        "T_mm": 80.0,
+        "hc_mm": 80.0,
+        "tc_mm": 1.5,
+        "tc_splice_mm": null
+      },
+      "collar_detail": {
+        "w_mm": 4.0,
+        "h_mm": 10.0,
+        "hw1_mm": 1.0,
+        "Tm_mm": 8.0,
+        "Tg_mm": 12.0,
+        "hw2_mm": 6.0
+      },
+      "install_load_T": 285,
+      "drawing_no": "PHC-A450-D-CO45260000",
+      "drawing_title": "PHC-A450-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 4.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 831.3,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 4.19,
+        "sigma_pe_forward_JIS_MPa": 869.8,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 76.3,
+          "mcr_pub_kNm": 73.6,
+          "rel_err_pct": 3.6,
+          "fr_implied_MPa": 5.94
+        },
+        "mu_check": {
+          "kr": 1.5,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 110.4,
+          "mu_pub_kNm": 110.4,
+          "rel_err_pct": 0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 2.325,
+        "mass_kg_per_m": 237.1
+      },
+      "length_range_m": [
+        6,
+        16
+      ],
+      "shear_capacity_kN_TCVN7888": 180.5
+    },
+    {
+      "code": "PHC-B450",
+      "class": "B",
+      "Do_mm": 450.0,
+      "Dp_mm": 370.0,
+      "Di_mm": 290.0,
+      "Dei_mm": 290.0,
+      "t_mm": 80.0,
+      "pc_bar": {
+        "d_mm": 9.0,
+        "N1": 14,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 107.9,
+      "Mu_kNm": 194.2,
+      "gc_bar": null,
+      "spiral": {
+        "d_mm": 4.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 900.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 16.0,
+        "T_mm": 80.0,
+        "hc_mm": 150.0,
+        "tc_mm": 3.0,
+        "tc_splice_mm": null
+      },
+      "collar_detail": {
+        "w_mm": 5.0,
+        "h_mm": 12.0,
+        "hw1_mm": 3.0,
+        "Tm_mm": 8.0,
+        "Tg_mm": 12.0,
+        "hw2_mm": 6.0
+      },
+      "install_load_T": 270,
+      "drawing_no": "PHC-B450-D-CO45260000",
+      "drawing_title": "PHC-B450-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 8.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 827.3,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 7.8,
+        "sigma_pe_forward_JIS_MPa": 806.8,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 105.9,
+          "mcr_pub_kNm": 107.9,
+          "rel_err_pct": -1.9,
+          "fr_implied_MPa": 6.57
+        },
+        "mu_check": {
+          "kr": 1.8,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 194.2,
+          "mu_pub_kNm": 194.2,
+          "rel_err_pct": -0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 2.325,
+        "mass_kg_per_m": 237.1
+      },
+      "length_range_m": [
+        6,
+        16
+      ],
+      "shear_capacity_kN_TCVN7888": 227.6
+    },
+    {
+      "code": "PHC-C450",
+      "class": "C",
+      "Do_mm": 450.0,
+      "Dp_mm": 370.0,
+      "Di_mm": 290.0,
+      "Dei_mm": 290.0,
+      "t_mm": 80.0,
+      "pc_bar": {
+        "d_mm": 10.7,
+        "N1": 14,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 122.6,
+      "Mu_kNm": 245.2,
+      "gc_bar": null,
+      "spiral": {
+        "d_mm": 4.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 900.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 18.0,
+        "T_mm": 80.0,
+        "hc_mm": 150.0,
+        "tc_mm": 3.0,
+        "tc_splice_mm": null
+      },
+      "collar_detail": {
+        "w_mm": 5.0,
+        "h_mm": 12.0,
+        "hw1_mm": 3.0,
+        "Tm_mm": 8.0,
+        "Tg_mm": 12.0,
+        "hw2_mm": 6.0
+      },
+      "install_load_T": 265,
+      "drawing_no": "PHC-C450-D-CO45260000",
+      "drawing_title": "PHC-C450-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 10.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 728.7,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 10.42,
+        "sigma_pe_forward_JIS_MPa": 759.3,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 120.7,
+          "mcr_pub_kNm": 122.6,
+          "rel_err_pct": -1.6,
+          "fr_implied_MPa": 6.56
+        },
+        "mu_check": {
+          "kr": 2.0,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 245.2,
+          "mu_pub_kNm": 245.2,
+          "rel_err_pct": 0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 2.325,
+        "mass_kg_per_m": 237.1
+      },
+      "length_range_m": [
+        6,
+        16
+      ],
+      "shear_capacity_kN_TCVN7888": 248.2
+    },
+    {
+      "code": "PHC-A500",
+      "class": "A",
+      "Do_mm": 500.0,
+      "Dp_mm": 400.0,
+      "Di_mm": 320.0,
+      "Dei_mm": 320.0,
+      "t_mm": 90.0,
+      "pc_bar": {
+        "d_mm": 7.1,
+        "N1": 14,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 103.0,
+      "Mu_kNm": 154.0,
+      "gc_bar": null,
+      "spiral": {
+        "d_mm": 4.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 1000.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 14.0,
+        "T_mm": 90.0,
+        "hc_mm": 100.0,
+        "tc_mm": 1.5,
+        "tc_splice_mm": null
+      },
+      "collar_detail": {
+        "w_mm": 5.0,
+        "h_mm": 12.0,
+        "hw1_mm": 1.0,
+        "Tm_mm": 8.0,
+        "Tg_mm": 12.0,
+        "hw2_mm": 6.0
+      },
+      "install_load_T": 365,
+      "drawing_no": "PHC-A500-D-CO50260000",
+      "drawing_title": "PHC-A500-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 4.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 832.6,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 4.18,
+        "sigma_pe_forward_JIS_MPa": 869.9,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 105.2,
+          "mcr_pub_kNm": 103.0,
+          "rel_err_pct": 2.1,
+          "fr_implied_MPa": 6.09
+        },
+        "mu_check": {
+          "kr": 1.5,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 154.5,
+          "mu_pub_kNm": 154.0,
+          "rel_err_pct": -0.3
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 2.898,
+        "mass_kg_per_m": 295.5
+      },
+      "length_range_m": [
+        6,
+        20
+      ],
+      "shear_capacity_kN_TCVN7888": 228.6
+    },
+    {
+      "code": "PHC-AB500",
+      "class": "AB",
+      "Do_mm": 500.0,
+      "Dp_mm": 400.0,
+      "Di_mm": 320.0,
+      "Dei_mm": 320.0,
+      "t_mm": 90.0,
+      "pc_bar": {
+        "d_mm": 9.0,
+        "N1": 14,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 125.0,
+      "Mu_kNm": 206.25,
+      "gc_bar": null,
+      "spiral": {
+        "d_mm": 4.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 1000.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 16.0,
+        "T_mm": 90.0,
+        "hc_mm": 100.0,
+        "tc_mm": 1.5,
+        "tc_splice_mm": null
+      },
+      "collar_detail": {
+        "w_mm": 5.0,
+        "h_mm": 12.0,
+        "hw1_mm": 1.0,
+        "Tm_mm": 8.0,
+        "Tg_mm": 12.0,
+        "hw2_mm": 6.0
+      },
+      "install_load_T": 350,
+      "drawing_no": "PHC-AB500-D-CO50260000",
+      "drawing_title": "PHC-AB500-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 6.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 775.0,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 6.43,
+        "sigma_pe_forward_JIS_MPa": 830.9,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 125.6,
+          "mcr_pub_kNm": 125.0,
+          "rel_err_pct": 0.5,
+          "fr_implied_MPa": 6.24
+        },
+        "mu_check": {
+          "kr": 1.65,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 206.2,
+          "mu_pub_kNm": 206.25,
+          "rel_err_pct": 0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 2.898,
+        "mass_kg_per_m": 295.5
+      },
+      "length_range_m": [
+        6,
+        20
+      ],
+      "shear_capacity_kN_TCVN7888": 271.0
+    },
+    {
+      "code": "PHC-B500",
+      "class": "B",
+      "Do_mm": 500.0,
+      "Dp_mm": 400.0,
+      "Di_mm": 320.0,
+      "Dei_mm": 320.0,
+      "t_mm": 90.0,
+      "pc_bar": {
+        "d_mm": 10.7,
+        "N1": 14,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 147.2,
+      "Mu_kNm": 265.0,
+      "gc_bar": null,
+      "spiral": {
+        "d_mm": 4.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 1000.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 18.0,
+        "T_mm": 90.0,
+        "hc_mm": 150.0,
+        "tc_mm": 3.0,
+        "tc_splice_mm": 6.0
+      },
+      "collar_detail": {
+        "w_mm": 5.0,
+        "h_mm": 12.0,
+        "hw1_mm": 1.0,
+        "Tm_mm": 8.0,
+        "Tg_mm": 12.0,
+        "hw2_mm": 6.0
+      },
+      "install_load_T": 345,
+      "drawing_no": "PHC-B500-D-CO50260000",
+      "drawing_title": "PHC-B500-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 8.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 728.7,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 8.68,
+        "sigma_pe_forward_JIS_MPa": 791.0,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 146.0,
+          "mcr_pub_kNm": 147.2,
+          "rel_err_pct": -0.8,
+          "fr_implied_MPa": 6.41
+        },
+        "mu_check": {
+          "kr": 1.8,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 265.0,
+          "mu_pub_kNm": 265.0,
+          "rel_err_pct": 0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 2.898,
+        "mass_kg_per_m": 295.5
+      },
+      "length_range_m": [
+        6,
+        20
+      ],
+      "shear_capacity_kN_TCVN7888": 288.4
+    },
+    {
+      "code": "PHC-C500",
+      "class": "C",
+      "Do_mm": 500.0,
+      "Dp_mm": 400.0,
+      "Di_mm": 320.0,
+      "Dei_mm": 320.0,
+      "t_mm": 90.0,
+      "pc_bar": {
+        "d_mm": 10.7,
+        "N1": 16,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 166.8,
+      "Mu_kNm": 333.5,
+      "gc_bar": null,
+      "spiral": {
+        "d_mm": 4.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 1000.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 18.0,
+        "T_mm": 90.0,
+        "hc_mm": 150.0,
+        "tc_mm": 3.0,
+        "tc_splice_mm": 6.0
+      },
+      "collar_detail": {
+        "w_mm": 5.0,
+        "h_mm": 12.0,
+        "hw1_mm": 3.0,
+        "Tm_mm": 8.0,
+        "Tg_mm": 12.0,
+        "hw2_mm": 6.0
+      },
+      "install_load_T": 340,
+      "drawing_no": "PHC-C500-D-CO50260000",
+      "drawing_title": "PHC-C500-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 10.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 795.7,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 9.71,
+        "sigma_pe_forward_JIS_MPa": 772.4,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 166.5,
+          "mcr_pub_kNm": 166.8,
+          "rel_err_pct": -0.2,
+          "fr_implied_MPa": 6.33
+        },
+        "mu_check": {
+          "kr": 2.0,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 333.6,
+          "mu_pub_kNm": 333.5,
+          "rel_err_pct": -0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 2.898,
+        "mass_kg_per_m": 295.5
+      },
+      "length_range_m": [
+        6,
+        20
+      ],
+      "shear_capacity_kN_TCVN7888": 313.9
+    },
+    {
+      "code": "PHC-A600",
+      "class": "A",
+      "Do_mm": 600.0,
+      "Dp_mm": 500.0,
+      "Di_mm": 400.0,
+      "Dei_mm": 400.0,
+      "t_mm": 100.0,
+      "pc_bar": {
+        "d_mm": 7.1,
+        "N1": 18,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 166.8,
+      "Mu_kNm": 250.2,
+      "gc_bar": {
+        "d_mm": 14.0,
+        "N2": 5,
+        "L2_mm": 1000.0
+      },
+      "spiral": {
+        "d_mm": 4.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 1200.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 14.0,
+        "T_mm": 100.0,
+        "hc_mm": 120.0,
+        "tc_mm": 1.5,
+        "tc_splice_mm": null
+      },
+      "collar_detail": {
+        "w_mm": 5.0,
+        "h_mm": 12.0,
+        "hw1_mm": 1.0,
+        "Tm_mm": 10.0,
+        "Tg_mm": 12.0,
+        "hw2_mm": 8.0
+      },
+      "install_load_T": 490,
+      "drawing_no": "PHC-A600-D-CO60260000",
+      "drawing_title": "PHC-A600-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 4.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 877.7,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 3.98,
+        "sigma_pe_forward_JIS_MPa": 873.3,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 175.3,
+          "mcr_pub_kNm": 166.8,
+          "rel_err_pct": 5.1,
+          "fr_implied_MPa": 5.8
+        },
+        "mu_check": {
+          "kr": 1.5,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 250.2,
+          "mu_pub_kNm": 250.2,
+          "rel_err_pct": -0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 3.927,
+        "mass_kg_per_m": 400.4
+      },
+      "length_range_m": [
+        6,
+        17
+      ],
+      "shear_capacity_kN_TCVN7888": 311.0
+    },
+    {
+      "code": "PHC-AB600",
+      "class": "AB",
+      "Do_mm": 600.0,
+      "Dp_mm": 500.0,
+      "Di_mm": 400.0,
+      "Dei_mm": 400.0,
+      "t_mm": 100.0,
+      "pc_bar": {
+        "d_mm": 9.0,
+        "N1": 18,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 206.0,
+      "Mu_kNm": 340.0,
+      "gc_bar": {
+        "d_mm": 14.0,
+        "N2": 5,
+        "L2_mm": 1000.0
+      },
+      "spiral": {
+        "d_mm": 4.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 1200.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 18.0,
+        "T_mm": 100.0,
+        "hc_mm": 150.0,
+        "tc_mm": 1.5,
+        "tc_splice_mm": null
+      },
+      "collar_detail": {
+        "w_mm": 5.0,
+        "h_mm": 12.0,
+        "hw1_mm": 1.0,
+        "Tm_mm": 10.0,
+        "Tg_mm": 12.0,
+        "hw2_mm": 8.0
+      },
+      "install_load_T": 480,
+      "drawing_no": "PHC-AB600-D-CO60260000",
+      "drawing_title": "PHC-AB600-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 6.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 817.0,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 6.14,
+        "sigma_pe_forward_JIS_MPa": 836.1,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 209.3,
+          "mcr_pub_kNm": 206.0,
+          "rel_err_pct": 1.6,
+          "fr_implied_MPa": 6.11
+        },
+        "mu_check": {
+          "kr": 1.65,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 339.9,
+          "mu_pub_kNm": 340.0,
+          "rel_err_pct": 0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 3.927,
+        "mass_kg_per_m": 400.4
+      },
+      "length_range_m": [
+        6,
+        17
+      ],
+      "shear_capacity_kN_TCVN7888": null,
+      "shear_capacity_note": "TCVN 7888:2014 Bang 1 khong liet ke V cho AB600 (chi co A/B/C); khong tu noi suy — can xac nhan tu nha san xuat hoac tinh cat theo BT03"
+    },
+    {
+      "code": "PHC-B600",
+      "class": "B",
+      "Do_mm": 600.0,
+      "Dp_mm": 500.0,
+      "Di_mm": 400.0,
+      "Dei_mm": 400.0,
+      "t_mm": 100.0,
+      "pc_bar": {
+        "d_mm": 10.7,
+        "N1": 18,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 245.2,
+      "Mu_kNm": 441.4,
+      "gc_bar": {
+        "d_mm": 14.0,
+        "N2": 5,
+        "L2_mm": 1000.0
+      },
+      "spiral": {
+        "d_mm": 4.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 1200.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 18.0,
+        "T_mm": 100.0,
+        "hc_mm": 150.0,
+        "tc_mm": 3.0,
+        "tc_splice_mm": 6.0
+      },
+      "collar_detail": {
+        "w_mm": 5.0,
+        "h_mm": 12.0,
+        "hw1_mm": 3.0,
+        "Tm_mm": 10.0,
+        "Tg_mm": 12.0,
+        "hw2_mm": 8.0
+      },
+      "install_load_T": 470,
+      "drawing_no": "PHC-B600-D-CO60260000",
+      "drawing_title": "PHC-B600-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 8.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 768.4,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 8.31,
+        "sigma_pe_forward_JIS_MPa": 797.8,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 243.3,
+          "mcr_pub_kNm": 245.2,
+          "rel_err_pct": -0.8,
+          "fr_implied_MPa": 6.41
+        },
+        "mu_check": {
+          "kr": 1.8,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 441.4,
+          "mu_pub_kNm": 441.4,
+          "rel_err_pct": 0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 3.927,
+        "mass_kg_per_m": 400.4
+      },
+      "length_range_m": [
+        6,
+        17
+      ],
+      "shear_capacity_kN_TCVN7888": 392.4
+    },
+    {
+      "code": "PHC-C600",
+      "class": "C",
+      "Do_mm": 600.0,
+      "Dp_mm": 500.0,
+      "Di_mm": 400.0,
+      "Dei_mm": 400.0,
+      "t_mm": 100.0,
+      "pc_bar": {
+        "d_mm": 10.7,
+        "N1": 24,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 284.5,
+      "Mu_kNm": 569.0,
+      "gc_bar": {
+        "d_mm": 14.0,
+        "N2": 5,
+        "L2_mm": 1000.0
+      },
+      "spiral": {
+        "d_mm": 4.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 1200.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 18.0,
+        "T_mm": 100.0,
+        "hc_mm": 150.0,
+        "tc_mm": 3.0,
+        "tc_splice_mm": 10.0
+      },
+      "collar_detail": {
+        "w_mm": 5.0,
+        "h_mm": 12.0,
+        "hw1_mm": 3.0,
+        "Tm_mm": 10.0,
+        "Tg_mm": 12.0,
+        "hw2_mm": 8.0
+      },
+      "install_load_T": 460,
+      "drawing_no": "PHC-C600-D-CO60260000",
+      "drawing_title": "PHC-C600-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 10.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 717.9,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 10.54,
+        "sigma_pe_forward_JIS_MPa": 757.0,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 277.4,
+          "mcr_pub_kNm": 284.5,
+          "rel_err_pct": -2.5,
+          "fr_implied_MPa": 6.72
+        },
+        "mu_check": {
+          "kr": 2.0,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 569.0,
+          "mu_pub_kNm": 569.0,
+          "rel_err_pct": 0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 3.927,
+        "mass_kg_per_m": 400.4
+      },
+      "length_range_m": [
+        6,
+        17
+      ],
+      "shear_capacity_kN_TCVN7888": 427.7
+    },
+    {
+      "code": "PHC-A700",
+      "class": "A",
+      "Do_mm": 700.0,
+      "Dp_mm": 600.0,
+      "Di_mm": 480.0,
+      "Dei_mm": 480.0,
+      "t_mm": 110.0,
+      "pc_bar": {
+        "d_mm": 9.0,
+        "N1": 15,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 264.9,
+      "Mu_kNm": 397.3,
+      "gc_bar": {
+        "d_mm": 14.0,
+        "N2": 6,
+        "L2_mm": 1000.0
+      },
+      "spiral": {
+        "d_mm": 4.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 1400.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 16.0,
+        "T_mm": 110.0,
+        "hc_mm": 200.0,
+        "tc_mm": 3.0,
+        "tc_splice_mm": 6.0
+      },
+      "collar_detail": {
+        "w_mm": 6.0,
+        "h_mm": 14.0,
+        "hw1_mm": 3.0,
+        "Tm_mm": 10.0,
+        "Tg_mm": 16.0,
+        "hw2_mm": 8.0
+      },
+      "install_load_T": 620,
+      "drawing_no": "PHC-A700-D-CO70260000",
+      "drawing_title": "PHC-A700-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 4.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 850.7,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 4.1,
+        "sigma_pe_forward_JIS_MPa": 871.3,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 270.2,
+          "mcr_pub_kNm": 264.9,
+          "rel_err_pct": 2.0,
+          "fr_implied_MPa": 6.1
+        },
+        "mu_check": {
+          "kr": 1.5,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 397.3,
+          "mu_pub_kNm": 397.3,
+          "rel_err_pct": -0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 5.097,
+        "mass_kg_per_m": 519.8
+      },
+      "length_range_m": [
+        6,
+        30
+      ],
+      "shear_capacity_kN_TCVN7888": 406.1
+    },
+    {
+      "code": "PHC-B700",
+      "class": "B",
+      "Do_mm": 700.0,
+      "Dp_mm": 600.0,
+      "Di_mm": 480.0,
+      "Dei_mm": 480.0,
+      "t_mm": 110.0,
+      "pc_bar": {
+        "d_mm": 10.7,
+        "N1": 21,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 372.8,
+      "Mu_kNm": 671.0,
+      "gc_bar": {
+        "d_mm": 14.0,
+        "N2": 6,
+        "L2_mm": 1000.0
+      },
+      "spiral": {
+        "d_mm": 5.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 1400.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 20.0,
+        "T_mm": 110.0,
+        "hc_mm": 200.0,
+        "tc_mm": 3.0,
+        "tc_splice_mm": 8.0
+      },
+      "collar_detail": {
+        "w_mm": 6.0,
+        "h_mm": 14.0,
+        "hw1_mm": 3.0,
+        "Tm_mm": 10.0,
+        "Tg_mm": 16.0,
+        "hw2_mm": 8.0
+      },
+      "install_load_T": 595,
+      "drawing_no": "PHC-B700-D-CO70260000",
+      "drawing_title": "PHC-B700-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 8.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 855.8,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 7.58,
+        "sigma_pe_forward_JIS_MPa": 810.7,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 375.1,
+          "mcr_pub_kNm": 372.8,
+          "rel_err_pct": 0.6,
+          "fr_implied_MPa": 6.21
+        },
+        "mu_check": {
+          "kr": 1.8,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 671.0,
+          "mu_pub_kNm": 671.0,
+          "rel_err_pct": -0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 5.097,
+        "mass_kg_per_m": 519.8
+      },
+      "length_range_m": [
+        6,
+        30
+      ],
+      "shear_capacity_kN_TCVN7888": 512.1
+    },
+    {
+      "code": "PHC-C700",
+      "class": "C",
+      "Do_mm": 700.0,
+      "Dp_mm": 600.0,
+      "Di_mm": 480.0,
+      "Dei_mm": 480.0,
+      "t_mm": 110.0,
+      "pc_bar": {
+        "d_mm": 10.7,
+        "N1": 30,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 441.4,
+      "Mu_kNm": 882.8,
+      "gc_bar": {
+        "d_mm": 14.0,
+        "N2": 6,
+        "L2_mm": 1000.0
+      },
+      "spiral": {
+        "d_mm": 5.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 1400.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 20.0,
+        "T_mm": 110.0,
+        "hc_mm": 200.0,
+        "tc_mm": 3.0,
+        "tc_splice_mm": 12.0
+      },
+      "collar_detail": {
+        "w_mm": 6.0,
+        "h_mm": 14.0,
+        "hw1_mm": 3.0,
+        "Tm_mm": 10.0,
+        "Tg_mm": 16.0,
+        "hw2_mm": 8.0
+      },
+      "install_load_T": 580,
+      "drawing_no": "PHC-C700-D-CO70260000",
+      "drawing_title": "PHC-C700-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 10.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 745.8,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 10.23,
+        "sigma_pe_forward_JIS_MPa": 762.8,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 427.5,
+          "mcr_pub_kNm": 441.4,
+          "rel_err_pct": -3.1,
+          "fr_implied_MPa": 6.83
+        },
+        "mu_check": {
+          "kr": 2.0,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 882.8,
+          "mu_pub_kNm": 882.8,
+          "rel_err_pct": 0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 5.097,
+        "mass_kg_per_m": 519.8
+      },
+      "length_range_m": [
+        6,
+        30
+      ],
+      "shear_capacity_kN_TCVN7888": 557.2
+    },
+    {
+      "code": "PHC-A800",
+      "class": "A",
+      "Do_mm": 800.0,
+      "Dp_mm": 680.0,
+      "Di_mm": 560.0,
+      "Dei_mm": 560.0,
+      "t_mm": 120.0,
+      "pc_bar": {
+        "d_mm": 9.0,
+        "N1": 21,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 392.4,
+      "Mu_kNm": 588.6,
+      "gc_bar": {
+        "d_mm": 14.0,
+        "N2": 5,
+        "L2_mm": 1000.0
+      },
+      "spiral": {
+        "d_mm": 5.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 1600.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 18.0,
+        "T_mm": 120.0,
+        "hc_mm": 200.0,
+        "tc_mm": 6.0,
+        "tc_splice_mm": 8.0
+      },
+      "collar_detail": {
+        "w_mm": 7.0,
+        "h_mm": 16.0,
+        "hw1_mm": 3.0,
+        "Tm_mm": 14.0,
+        "Tg_mm": 18.0,
+        "hw2_mm": 10.0
+      },
+      "install_load_T": 780,
+      "drawing_no": "PHC-A800-D-CO80260000",
+      "drawing_title": "PHC-A800-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 4.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 763.5,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 4.53,
+        "sigma_pe_forward_JIS_MPa": 864.0,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 393.4,
+          "mcr_pub_kNm": 392.4,
+          "rel_err_pct": 0.3,
+          "fr_implied_MPa": 6.27
+        },
+        "mu_check": {
+          "kr": 1.5,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 588.6,
+          "mu_pub_kNm": 588.6,
+          "rel_err_pct": 0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 6.409,
+        "mass_kg_per_m": 653.5
+      },
+      "length_range_m": [
+        6,
+        30
+      ],
+      "shear_capacity_kN_TCVN7888": 512.1
+    },
+    {
+      "code": "PHC-B800",
+      "class": "B",
+      "Do_mm": 800.0,
+      "Dp_mm": 680.0,
+      "Di_mm": 560.0,
+      "Dei_mm": 560.0,
+      "t_mm": 120.0,
+      "pc_bar": {
+        "d_mm": 10.7,
+        "N1": 27,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 539.6,
+      "Mu_kNm": 971.2,
+      "gc_bar": {
+        "d_mm": 16.0,
+        "N2": 5,
+        "L2_mm": 1000.0
+      },
+      "spiral": {
+        "d_mm": 5.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 1600.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 20.0,
+        "T_mm": 120.0,
+        "hc_mm": 200.0,
+        "tc_mm": 6.0,
+        "tc_splice_mm": 10.0
+      },
+      "collar_detail": {
+        "w_mm": 7.0,
+        "h_mm": 16.0,
+        "hw1_mm": 3.0,
+        "Tm_mm": 14.0,
+        "Tg_mm": 18.0,
+        "hw2_mm": 10.0
+      },
+      "install_load_T": 750,
+      "drawing_no": "PHC-B800-D-CO80260000",
+      "drawing_title": "PHC-B800-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 8.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 836.7,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 7.73,
+        "sigma_pe_forward_JIS_MPa": 808.1,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 546.2,
+          "mcr_pub_kNm": 539.6,
+          "rel_err_pct": 1.2,
+          "fr_implied_MPa": 6.13
+        },
+        "mu_check": {
+          "kr": 1.8,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 971.3,
+          "mu_pub_kNm": 971.2,
+          "rel_err_pct": -0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 6.409,
+        "mass_kg_per_m": 653.5
+      },
+      "length_range_m": [
+        6,
+        30
+      ],
+      "shear_capacity_kN_TCVN7888": 646.5
+    },
+    {
+      "code": "PHC-C800",
+      "class": "C",
+      "Do_mm": 800.0,
+      "Dp_mm": 680.0,
+      "Di_mm": 560.0,
+      "Dei_mm": 560.0,
+      "t_mm": 120.0,
+      "pc_bar": {
+        "d_mm": 10.7,
+        "N1": 36,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 637.6,
+      "Mu_kNm": 1275.0,
+      "gc_bar": {
+        "d_mm": 16.0,
+        "N2": 5,
+        "L2_mm": 1000.0
+      },
+      "spiral": {
+        "d_mm": 5.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 1600.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 20.0,
+        "T_mm": 120.0,
+        "hc_mm": 200.0,
+        "tc_mm": 6.0,
+        "tc_splice_mm": 12.0
+      },
+      "collar_detail": {
+        "w_mm": 7.0,
+        "h_mm": 16.0,
+        "hw1_mm": 3.0,
+        "Tm_mm": 14.0,
+        "Tg_mm": 18.0,
+        "hw2_mm": 10.0
+      },
+      "install_load_T": 730,
+      "drawing_no": "PHC-C800-D-CO80260000",
+      "drawing_title": "PHC-C800-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 10.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 781.9,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 9.85,
+        "sigma_pe_forward_JIS_MPa": 769.9,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 622.6,
+          "mcr_pub_kNm": 637.6,
+          "rel_err_pct": -2.4,
+          "fr_implied_MPa": 6.69
+        },
+        "mu_check": {
+          "kr": 2.0,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 1275.2,
+          "mu_pub_kNm": 1275.0,
+          "rel_err_pct": -0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 6.409,
+        "mass_kg_per_m": 653.5
+      },
+      "length_range_m": [
+        6,
+        30
+      ],
+      "shear_capacity_kN_TCVN7888": 704.4
+    },
+    {
+      "code": "PHC-A900",
+      "class": "A",
+      "Do_mm": 900.0,
+      "Dp_mm": 800.0,
+      "Di_mm": 640.0,
+      "Dei_mm": 640.0,
+      "t_mm": 130.0,
+      "pc_bar": {
+        "d_mm": 9.0,
+        "N1": 24,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 539.6,
+      "Mu_kNm": 809.6,
+      "gc_bar": {
+        "d_mm": 14.0,
+        "N2": 8,
+        "L2_mm": 1000.0
+      },
+      "spiral": {
+        "d_mm": 5.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 1800.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 20.0,
+        "T_mm": 130.0,
+        "hc_mm": 200.0,
+        "tc_mm": 6.0,
+        "tc_splice_mm": 12.0
+      },
+      "collar_detail": {
+        "w_mm": 7.0,
+        "h_mm": 16.0,
+        "hw1_mm": 3.0,
+        "Tm_mm": 16.0,
+        "Tg_mm": 18.0,
+        "hw2_mm": 10.0
+      },
+      "install_load_T": 960,
+      "drawing_no": "PHC-A900-D-CO90260000",
+      "drawing_title": "PHC-A900-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 4.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 819.9,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 4.24,
+        "sigma_pe_forward_JIS_MPa": 868.9,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 548.7,
+          "mcr_pub_kNm": 539.6,
+          "rel_err_pct": 1.7,
+          "fr_implied_MPa": 6.13
+        },
+        "mu_check": {
+          "kr": 1.5,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 809.4,
+          "mu_pub_kNm": 809.6,
+          "rel_err_pct": 0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 7.862,
+        "mass_kg_per_m": 801.7
+      },
+      "length_range_m": [
+        6,
+        30
+      ],
+      "shear_capacity_kN_TCVN7888": 631.0
+    },
+    {
+      "code": "PHC-B900",
+      "class": "B",
+      "Do_mm": 900.0,
+      "Dp_mm": 800.0,
+      "Di_mm": 640.0,
+      "Dei_mm": 640.0,
+      "t_mm": 130.0,
+      "pc_bar": {
+        "d_mm": 10.7,
+        "N1": 34,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 735.8,
+      "Mu_kNm": 1324.0,
+      "gc_bar": {
+        "d_mm": 16.0,
+        "N2": 8,
+        "L2_mm": 1000.0
+      },
+      "spiral": {
+        "d_mm": 6.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 1800.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 20.0,
+        "T_mm": 130.0,
+        "hc_mm": 200.0,
+        "tc_mm": 6.0,
+        "tc_splice_mm": 12.0
+      },
+      "collar_detail": {
+        "w_mm": 7.0,
+        "h_mm": 16.0,
+        "hw1_mm": 3.0,
+        "Tm_mm": 16.0,
+        "Tg_mm": 18.0,
+        "hw2_mm": 10.0
+      },
+      "install_load_T": 915,
+      "drawing_no": "PHC-B900-D-CO90260000",
+      "drawing_title": "PHC-B900-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 8.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 814.9,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 7.9,
+        "sigma_pe_forward_JIS_MPa": 805.0,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 761.7,
+          "mcr_pub_kNm": 735.8,
+          "rel_err_pct": 3.5,
+          "fr_implied_MPa": 5.81
+        },
+        "mu_check": {
+          "kr": 1.8,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 1324.4,
+          "mu_pub_kNm": 1324.0,
+          "rel_err_pct": -0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 7.862,
+        "mass_kg_per_m": 801.7
+      },
+      "length_range_m": [
+        6,
+        30
+      ],
+      "shear_capacity_kN_TCVN7888": 797.0
+    },
+    {
+      "code": "PHC-C900",
+      "class": "C",
+      "Do_mm": 900.0,
+      "Dp_mm": 800.0,
+      "Di_mm": 640.0,
+      "Dei_mm": 640.0,
+      "t_mm": 130.0,
+      "pc_bar": {
+        "d_mm": 10.7,
+        "N1": 44,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 833.8,
+      "Mu_kNm": 1668.0,
+      "gc_bar": {
+        "d_mm": 16.0,
+        "N2": 8,
+        "L2_mm": 1000.0
+      },
+      "spiral": {
+        "d_mm": 6.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 1800.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 20.0,
+        "T_mm": 130.0,
+        "hc_mm": 200.0,
+        "tc_mm": 6.0,
+        "tc_splice_mm": 12.0
+      },
+      "collar_detail": {
+        "w_mm": 7.0,
+        "h_mm": 16.0,
+        "hw1_mm": 4.0,
+        "Tm_mm": 16.0,
+        "Tg_mm": 18.0,
+        "hw2_mm": 10.0
+      },
+      "install_load_T": 895,
+      "drawing_no": "PHC-C900-D-CO90260000",
+      "drawing_title": "PHC-C900-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 10.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 784.8,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 9.82,
+        "sigma_pe_forward_JIS_MPa": 770.4,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 868.3,
+          "mcr_pub_kNm": 833.8,
+          "rel_err_pct": 4.1,
+          "fr_implied_MPa": 5.65
+        },
+        "mu_check": {
+          "kr": 2.0,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 1667.6,
+          "mu_pub_kNm": 1668.0,
+          "rel_err_pct": 0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 7.862,
+        "mass_kg_per_m": 801.7
+      },
+      "length_range_m": [
+        6,
+        30
+      ],
+      "shear_capacity_kN_TCVN7888": 867.0
+    },
+    {
+      "code": "PHC-A1000",
+      "class": "A",
+      "Do_mm": 1000.0,
+      "Dp_mm": 880.0,
+      "Di_mm": 720.0,
+      "Dei_mm": 720.0,
+      "t_mm": 140.0,
+      "pc_bar": {
+        "d_mm": 9.0,
+        "N1": 28,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 735.8,
+      "Mu_kNm": 1104.0,
+      "gc_bar": {
+        "d_mm": 14.0,
+        "N2": 8,
+        "L2_mm": 1000.0
+      },
+      "spiral": {
+        "d_mm": 5.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 2000.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 20.0,
+        "T_mm": 140.0,
+        "hc_mm": 200.0,
+        "tc_mm": 6.0,
+        "tc_splice_mm": 12.0
+      },
+      "collar_detail": {
+        "w_mm": 8.0,
+        "h_mm": 18.0,
+        "hw1_mm": 3.0,
+        "Tm_mm": 18.0,
+        "Tg_mm": 20.0,
+        "hw2_mm": 10.0
+      },
+      "install_load_T": 1150,
+      "drawing_no": "PHC-A1000-D-CO10260000",
+      "drawing_title": "PHC-A1000-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 4.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 845.4,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 4.12,
+        "sigma_pe_forward_JIS_MPa": 870.9,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 739.5,
+          "mcr_pub_kNm": 735.8,
+          "rel_err_pct": 0.5,
+          "fr_implied_MPa": 6.25
+        },
+        "mu_check": {
+          "kr": 1.5,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 1103.7,
+          "mu_pub_kNm": 1104.0,
+          "rel_err_pct": 0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 9.456,
+        "mass_kg_per_m": 964.3
+      },
+      "length_range_m": [
+        6,
+        30
+      ],
+      "shear_capacity_kN_TCVN7888": 762.2
+    },
+    {
+      "code": "PHC-B1000",
+      "class": "B",
+      "Do_mm": 1000.0,
+      "Dp_mm": 880.0,
+      "Di_mm": 720.0,
+      "Dei_mm": 720.0,
+      "t_mm": 140.0,
+      "pc_bar": {
+        "d_mm": 10.7,
+        "N1": 44,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 1030.0,
+      "Mu_kNm": 1854.0,
+      "gc_bar": {
+        "d_mm": 16.0,
+        "N2": 8,
+        "L2_mm": 1000.0
+      },
+      "spiral": {
+        "d_mm": 6.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 2000.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 20.0,
+        "T_mm": 140.0,
+        "hc_mm": 200.0,
+        "tc_mm": 6.0,
+        "tc_splice_mm": 12.0
+      },
+      "collar_detail": {
+        "w_mm": 8.0,
+        "h_mm": 18.0,
+        "hw1_mm": 4.0,
+        "Tm_mm": 18.0,
+        "Tg_mm": 20.0,
+        "hw2_mm": 10.0
+      },
+      "install_load_T": 1100,
+      "drawing_no": "PHC-B1000-D-CO10260000",
+      "drawing_title": "PHC-B1000-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 8.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 756.8,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 8.41,
+        "sigma_pe_forward_JIS_MPa": 795.8,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 1026.6,
+          "mcr_pub_kNm": 1030.0,
+          "rel_err_pct": -0.3,
+          "fr_implied_MPa": 6.35
+        },
+        "mu_check": {
+          "kr": 1.8,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 1854.0,
+          "mu_pub_kNm": 1854.0,
+          "rel_err_pct": 0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 9.456,
+        "mass_kg_per_m": 964.3
+      },
+      "length_range_m": [
+        6,
+        30
+      ],
+      "shear_capacity_kN_TCVN7888": 961.4
+    },
+    {
+      "code": "PHC-C1000",
+      "class": "C",
+      "Do_mm": 1000.0,
+      "Dp_mm": 880.0,
+      "Di_mm": 720.0,
+      "Dei_mm": 720.0,
+      "t_mm": 140.0,
+      "pc_bar": {
+        "d_mm": 10.7,
+        "N1": 55,
+        "f_pu_MPa": 1420,
+        "f_py_MPa": 1275,
+        "standard": "TCVN 6284-3 (JIS G3137)"
+      },
+      "Mcr_kNm": 1177.0,
+      "Mu_kNm": 2354.0,
+      "gc_bar": {
+        "d_mm": 16.0,
+        "N2": 8,
+        "L2_mm": 1000.0
+      },
+      "spiral": {
+        "d_mm": 6.0,
+        "pitch_end_mm": 50,
+        "layers_end": 2,
+        "L_end_mm": 2000.0,
+        "pitch_mid_mm": 100,
+        "layers_mid": 1,
+        "standard": "SWM-C (JIS G 3532)"
+      },
+      "flange": {
+        "Tf_mm": 22.0,
+        "T_mm": 140.0,
+        "hc_mm": 200.0,
+        "tc_mm": 6.0,
+        "tc_splice_mm": 12.0
+      },
+      "collar_detail": {
+        "w_mm": 8.0,
+        "h_mm": 18.0,
+        "hw1_mm": 4.0,
+        "Tm_mm": 18.0,
+        "Tg_mm": 20.0,
+        "hw2_mm": 10.0
+      },
+      "install_load_T": 1065,
+      "drawing_no": "PHC-C1000-D-CO10260000",
+      "drawing_title": "PHC-C1000-TCVN-7888",
+      "prestress": {
+        "sigma_ce_MPa": 10.0,
+        "sigma_ce_source": "TCVN 7888:2014 §6.5 (A 4, AB 6, B 8, C 10 MPa, ±5%)",
+        "sigma_pe_MPa": 754.8,
+        "sigma_pe_source": "sigma_pe = sigma_ce * A0 / Ap, A0 = Ac - Ap",
+        "sigma_ce_forward_JIS_MPa": 10.13,
+        "sigma_pe_forward_JIS_MPa": 764.6,
+        "mcr_backcheck": {
+          "fr_MPa": 6.3,
+          "fr_source": "doi chieu: fr suy ra tu Mcr cong bo, trung binh ~6,3 MPa (AASHTO fr=0,63*sqrt(80)=5,64 MPa)",
+          "mcr_pred_kNm": 1170.2,
+          "mcr_pub_kNm": 1177.0,
+          "rel_err_pct": -0.6,
+          "fr_implied_MPa": 6.39
+        },
+        "mu_check": {
+          "kr": 2.0,
+          "kr_source": "TCVN 7888:2014 §6.6",
+          "mu_pred_kNm": 2354.0,
+          "mu_pub_kNm": 2354.0,
+          "rel_err_pct": 0.0
+        }
+      },
+      "self_weight": {
+        "gamma_c_kN_m3": 25,
+        "w_kN_per_m": 9.456,
+        "mass_kg_per_m": 964.3
+      },
+      "length_range_m": [
+        6,
+        30
+      ],
+      "shear_capacity_kN_TCVN7888": 1047.0
+    }
+  ]
+}

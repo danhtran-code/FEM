@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.DS_Store
+.vscode/
+node_modules/
+dist/
+# Ban ve goc Phan Vu (PDF, 15 MB) chi luu local, khong day len GitHub
+Ref/
